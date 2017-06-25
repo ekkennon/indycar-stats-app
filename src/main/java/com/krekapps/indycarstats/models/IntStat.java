@@ -1,16 +1,17 @@
 package com.krekapps.indycarstats.models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ekk on 25-Jun-17.
  */
 
 @Entity
-public class Stat {
+public class IntStat {
 
     @Id
     @GeneratedValue
@@ -25,12 +26,9 @@ public class Stat {
     @ManyToOne
     private Driver driver;
 
-    @ManyToOne
-    private StatType type;
+    private int value;
 
-    //private Object value;
-
-    public Stat() {
+    public IntStat() {
     }
 
     public int getId() {
@@ -49,14 +47,6 @@ public class Stat {
         this.name = name;
     }
 
-    public StatType getType() {
-        return type;
-    }
-
-    public void setType(StatType type) {
-        this.type = type;
-    }
-
     public Session getSession() {
         return session;
     }
@@ -72,12 +62,12 @@ public class Stat {
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
-/*
-    public Object getValue() {
+
+    public int getValue() {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(int value) {
         this.value = value;
-    }*/
+    }
 }
