@@ -10,20 +10,20 @@ import java.util.List;
  */
 
 @Entity
-public class Driver {
+public class StatType {
 
     @Id
     @GeneratedValue
     private int id;
 
     @NotNull
-    private String name;
+    private String type;
 
     @OneToMany
-    @JoinColumn(name="driver_id")
+    @JoinColumn(name="stattype_id")
     private List<Stat> stats = new ArrayList<>();
 
-    public Driver() {
+    public StatType() {
     }
 
     public int getId() {
@@ -34,12 +34,12 @@ public class Driver {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public List<Stat> getStats() {

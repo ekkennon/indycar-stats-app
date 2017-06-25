@@ -1,6 +1,6 @@
 package com.krekapps.indycarstats.models.data;
 
-import com.krekapps.indycarstats.models.Race;
+import com.krekapps.indycarstats.models.Track;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +12,5 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface RaceDao extends CrudRepository<Race, Integer> {
+public interface TrackDao extends CrudRepository<Track, Integer> {
 }

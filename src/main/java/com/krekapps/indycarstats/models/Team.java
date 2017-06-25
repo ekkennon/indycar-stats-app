@@ -1,6 +1,9 @@
 package com.krekapps.indycarstats.models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -8,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-public class RaceSession {
+public class Team {
 
     @Id
     @GeneratedValue
@@ -18,9 +21,9 @@ public class RaceSession {
     private String name;
 
     @ManyToOne
-    private Race race;
+    private Season season;
 
-    public RaceSession() {
+    public Team() {
     }
 
     public int getId() {
@@ -39,11 +42,11 @@ public class RaceSession {
         this.name = name;
     }
 
-    public Race getRace() {
-        return race;
+    public Season getSeason() {
+        return season;
     }
 
-    public void setRace(Race race) {
-        this.race = race;
+    public void setSeason(Season season) {
+        this.season = season;
     }
 }

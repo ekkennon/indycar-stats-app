@@ -2,15 +2,13 @@ package com.krekapps.indycarstats.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ekk on 25-Jun-17.
  */
 
 @Entity
-public class Driver {
+public class Track {
 
     @Id
     @GeneratedValue
@@ -19,11 +17,7 @@ public class Driver {
     @NotNull
     private String name;
 
-    @OneToMany
-    @JoinColumn(name="driver_id")
-    private List<Stat> stats = new ArrayList<>();
-
-    public Driver() {
+    public Track() {
     }
 
     public int getId() {
@@ -40,13 +34,5 @@ public class Driver {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Stat> getStats() {
-        return stats;
-    }
-
-    public void setStats(List<Stat> stats) {
-        this.stats = stats;
     }
 }

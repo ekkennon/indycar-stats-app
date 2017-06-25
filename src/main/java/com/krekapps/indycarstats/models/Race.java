@@ -1,7 +1,6 @@
 package com.krekapps.indycarstats.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +15,15 @@ public class Race {
     @GeneratedValue
     private int id;
 
-    @NotNull
-    private String name;
+    @ManyToOne
+    private Season season;
 
     @OneToMany
     @JoinColumn(name="race_id")
-    private List<RaceSession> sessions = new ArrayList<>();
+    private List<Session> sessions = new ArrayList<>();
+
+    @ManyToOne
+    private Track track;
 
     public Race() {
     }
@@ -34,23 +36,31 @@ public class Race {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Season getSeason() {
+        return season;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSeason(Season season) {
+        this.season = season;
     }
 
-    public List<RaceSession> getSessions() {
+    public Track getTrack() {
+        return track;
+    }
+
+    public void setTrack(Track track) {
+        this.track = track;
+    }
+
+    public List<Session> getSessions() {
         return sessions;
     }
 
-    public void addSession(RaceSession session) {
+    public void addSession(Session session) {
         sessions.add(session);
     }
 
-    public void setSessions(ArrayList<RaceSession> sessions) {
+    public void setSessions(ArrayList<Session> sessions) {
         this.sessions = sessions;
     }
 }

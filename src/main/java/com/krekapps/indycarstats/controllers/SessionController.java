@@ -1,8 +1,7 @@
 package com.krekapps.indycarstats.controllers;
 
-import com.krekapps.indycarstats.models.Race;
-import com.krekapps.indycarstats.models.RaceSession;
-import com.krekapps.indycarstats.models.data.RaceDao;
+import com.krekapps.indycarstats.models.Session;
+import com.krekapps.indycarstats.models.data.TrackDao;
 import com.krekapps.indycarstats.models.data.SessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +21,14 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(value="sessions")
 public class SessionController {
-    private String addTitle = "Add IndyCar Race:";
-    private String viewListTitle = "IndyCar Race Sessions";
+    private String addTitle = "Add IndyCar Track:";
+    private String viewListTitle = "IndyCar Track Sessions";
 
     @Autowired
     private SessionDao sessionDao;
 
     @Autowired
-    private RaceDao raceDao;
+    private TrackDao trackDao;
 
     @RequestMapping(value="")
     private String index(Model model) {
@@ -40,21 +39,21 @@ public class SessionController {
     @RequestMapping(value="add", method= RequestMethod.GET)
     private String add(Model model) {
         model.addAttribute("title", addTitle);
-        model.addAttribute(new RaceSession());
-        model.addAttribute("races", raceDao.findAll());
+        model.addAttribute(new Session());
+        model.addAttribute("tracks", trackDao.findAll());
         return "sessions/add";
     }
 
     @RequestMapping(value="add", method=RequestMethod.POST)
-    private String add(Model model, @ModelAttribute @Valid RaceSession raceSession, Errors errors, @RequestParam int raceId) {
+    private String add(Model model, @ModelAttribute @Valid Session session, Errors errors, @RequestParam int trackId) {
         if (errors.hasErrors()) {
             model.addAttribute("title", addTitle);
             return "sessions/add";
         }
 
-        sessionDao.save(raceSession);
+        sessionDao.save(session);
         model.addAttribute("title", viewListTitle);
-        model.addAttribute("races", sessionDao.findAll());
+        model.addAttribute("tracks", sessionDao.findAll());
         return "redirect:";
     }
 }

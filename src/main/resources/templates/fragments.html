@@ -19,7 +19,7 @@
                 <div class="navbar-header">
                     <a th:href="@{/}" class="navbar-brand">Home</a>
                     <a th:href="@{/drivers}" class="navbar-brand">Drivers</a>
-                    <a th:href="@{/races}" class="navbar-brand">Races</a>
+                    <a th:href="@{/tracks}" class="navbar-brand">Tracks</a>
                 </div>
             </div>
         </div>
@@ -35,12 +35,12 @@
             </div>
         </div>
 
-        <div th:fragment="race-footer" class="navbar navbar-inverse navbar-fixed-bottom">
+        <div th:fragment="track-footer" class="navbar navbar-inverse navbar-fixed-bottom">
             <div class="container">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a th:href="@{/races/view}">Races List</a></li>
-                        <li><a th:href="@{/races/add}">Add Race</a></li>
+                        <li><a th:href="@{/tracks/view}">Tracks List</a></li>
+                        <li><a th:href="@{/tracks/add}">Add Track</a></li>
                         <li><a th:href="@{/sessions}">Sessions</a></li>
                     </ul>
                 </div>

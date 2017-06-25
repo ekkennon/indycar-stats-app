@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 @Entity
-public class Driver {
+public class Session {
 
     @Id
     @GeneratedValue
@@ -19,11 +19,14 @@ public class Driver {
     @NotNull
     private String name;
 
+    @ManyToOne
+    private Race race;
+
     @OneToMany
-    @JoinColumn(name="driver_id")
+    @JoinColumn(name="session_id")
     private List<Stat> stats = new ArrayList<>();
 
-    public Driver() {
+    public Session() {
     }
 
     public int getId() {
@@ -40,6 +43,14 @@ public class Driver {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 
     public List<Stat> getStats() {
