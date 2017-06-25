@@ -1,16 +1,14 @@
 package com.krekapps.indycarstats.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  * Created by ekk on 25-Jun-17.
  */
 
 @Entity
-public class Driver {
+public class RaceSession {
 
     @Id
     @GeneratedValue
@@ -19,7 +17,10 @@ public class Driver {
     @NotNull
     private String name;
 
-    public Driver() {
+    @ManyToOne
+    private Race race;
+
+    public RaceSession() {
     }
 
     public int getId() {
@@ -36,5 +37,13 @@ public class Driver {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 }

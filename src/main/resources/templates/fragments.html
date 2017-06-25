@@ -41,6 +41,17 @@
                     <ul class="nav navbar-nav">
                         <li><a th:href="@{/races/view}">Races List</a></li>
                         <li><a th:href="@{/races/add}">Add Race</a></li>
+                        <li><a th:href="@{/sessions}">Sessions</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div th:fragment="session-footer" class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{/sessions/add}">Add Session</a></li>
                     </ul>
                 </div>
             </div>

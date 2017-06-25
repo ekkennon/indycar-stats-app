@@ -1,9 +1,9 @@
 package com.krekapps.indycarstats.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ekk on 25-Jun-17.
@@ -19,11 +19,11 @@ public class Race {
     @NotNull
     private String name;
 
-    public Race() {
-    }
+    @OneToMany
+    @JoinColumn(name="race_id")
+    private List<RaceSession> sessions = new ArrayList<>();
 
-    public Race(String name) {
-        this.name = name;
+    public Race() {
     }
 
     public int getId() {
@@ -40,5 +40,17 @@ public class Race {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<RaceSession> getSessions() {
+        return sessions;
+    }
+
+    public void addSession(RaceSession session) {
+        sessions.add(session);
+    }
+
+    public void setSessions(ArrayList<RaceSession> sessions) {
+        this.sessions = sessions;
     }
 }

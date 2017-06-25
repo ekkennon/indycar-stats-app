@@ -51,7 +51,7 @@ public class RaceController {
         return "races/view";
     }
 
-    @RequestMapping(value="add", method= RequestMethod.GET)
+    @RequestMapping(value="add", method=RequestMethod.GET)
     private String add(Model model) {
         model.addAttribute("title", addTitle);
         model.addAttribute(new Race());
