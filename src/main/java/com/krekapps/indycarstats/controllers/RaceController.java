@@ -1,7 +1,7 @@
 package com.krekapps.indycarstats.controllers;
 
-import com.krekapps.indycarstats.models.Driver;
-import com.krekapps.indycarstats.models.data.DriverDao;
+import com.krekapps.indycarstats.models.Race;
+import com.krekapps.indycarstats.models.data.RaceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.validation.Valid;
 import java.util.ArrayList;
 
@@ -18,55 +19,55 @@ import java.util.ArrayList;
  */
 
 @Controller
-@RequestMapping(value="drivers")
-public class DriverController {
-    private String addTitle = "Add IndyCar Driver:";
-    private String viewListTitle = "IndyCar Drivers List";
+@RequestMapping(value="races")
+public class RaceController {
+    private String addTitle = "Add IndyCar Race:";
+    private String viewListTitle = "IndyCar Races List";
 
     @Autowired
-    private DriverDao driverDao;
+    private RaceDao raceDao;
 
     @RequestMapping(value="")
     private String index(Model model) {
-        model.addAttribute("title", "IndyCar Drivers");
-        return "drivers/index";
+        model.addAttribute("title", "IndyCar Races");
+        return "races/index";
     }
 
     @RequestMapping(value="view")
     private String viewAll(Model model) {
         model.addAttribute("title", viewListTitle);
-        model.addAttribute("drivers", driverDao.findAll());
-        return "drivers/view";
+        model.addAttribute("races", raceDao.findAll());
+        return "races/view";
     }
 
     @RequestMapping(value="view/{id}")
     private String viewOne(Model model, @PathVariable int id) {
-        Driver driver = driverDao.findOne(id);
-        ArrayList<Driver> driverlist = new ArrayList<>();
-        driverlist.add(driver);
-        Iterable<Driver> d = driverlist;
-        model.addAttribute("title", "IndyCar Driver: " + driver.getName());
-        model.addAttribute("drivers", d);
-        return "drivers/view";
+        Race race = raceDao.findOne(id);
+        ArrayList<Race> racelist = new ArrayList<>();
+        racelist.add(race);
+        Iterable<Race> d = racelist;
+        model.addAttribute("title", "IndyCar Race: " + race.getName());
+        model.addAttribute("races", d);
+        return "races/view";
     }
 
     @RequestMapping(value="add", method= RequestMethod.GET)
     private String add(Model model) {
         model.addAttribute("title", addTitle);
-        model.addAttribute(new Driver());
-        return "drivers/add";
+        model.addAttribute(new Race());
+        return "races/add";
     }
 
     @RequestMapping(value="add", method=RequestMethod.POST)
-    private String add(Model model, @ModelAttribute @Valid Driver driver, Errors errors) {
+    private String add(Model model, @ModelAttribute @Valid Race race, Errors errors) {
         if (errors.hasErrors()) {
             model.addAttribute("title", addTitle);
-            return "drivers/add";
+            return "races/add";
         }
 
-        driverDao.save(driver);
+        raceDao.save(race);
         model.addAttribute("title", viewListTitle);
-        model.addAttribute("drivers", driverDao.findAll());
-        return "drivers/view";
+        model.addAttribute("races", raceDao.findAll());
+        return "races/view";
     }
 }
