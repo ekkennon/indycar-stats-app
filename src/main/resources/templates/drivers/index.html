@@ -5,7 +5,9 @@
 
         <div th:replace="fragments :: page-header"></div>
 
-        <div th:replace="fragments :: mainbody"></div>
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
+        </div>
 
         <div th:replace="fragments :: driver-footer"></div>
 
