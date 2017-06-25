@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head th:replace="fragments :: head"></head>
+    <body>
+
+        <div th:replace="fragments :: page-header"></div>
+
+        <div th:replace="fragments :: mainbody">
+            <div th:unless="${drivers} and ${drivers.size()}">
+                <h2>No Results</h2>
+            </div>
+
+            <table class="table">
+                <tr th:each="driver : ${drivers}">
+                    <td><a th:href="'/drivers/view/' + ${driver.id}" th:text="${driver.name}"></a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div th:replace="fragments :: driver-footer"></div>
+
+    </body>
+</html>

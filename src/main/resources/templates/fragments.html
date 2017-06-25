@@ -5,7 +5,7 @@
 
     <!-- Bootstrap stylesheets and script -->
     <meta charset="UTF-8"/>
-    <title th:text="${title}">TaskList</title>
+    <title th:text="${title}">IndyCar Stats</title>
 
     <link th:href="@{/css/style.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -18,15 +18,20 @@
     <div class="container">
         <div class="navbar-header">
             <a th:href="@{/}" class="navbar-brand">Home</a>
+            <a th:href="@{/drivers}" class="navbar-brand">Drivers</a>
         </div>
     </div>
+</div>
+
+<div th:fragment="mainbody" class="container body-content">
+    <h2 th:text="${title}">IndyCar Stats</h2>
 </div>
 
 <div th:fragment="driver-footer" class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="container">
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/drivers/view}">View Drivers</a></li>
+                <li><a th:href="@{/drivers/view}">Drivers List</a></li>
                 <li><a th:href="@{/drivers/add}">Add Driver</a></li>
             </ul>
         </div>
