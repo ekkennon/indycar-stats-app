@@ -1,0 +1,4 @@
+to insert data from these sql files to the db:
+ *create data.sql file directly off resources folder
+ *copy insert statements to data.sql
+ *after app has run and data put in db, delete data.sql file

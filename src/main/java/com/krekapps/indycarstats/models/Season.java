@@ -20,11 +20,11 @@ public class Season {
     private int year;
 
     @OneToMany
-    @JoinColumn(name="season_id")
+    @JoinColumn(name="season_year")
     private List<Race> races = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name="session_id")
+    @JoinColumn(name="session_year")
     private List<Team> teams = new ArrayList<>();
 
     public Season() {

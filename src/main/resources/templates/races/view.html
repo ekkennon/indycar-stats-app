@@ -14,7 +14,7 @@
 
             <table class="table">
                 <tr th:each="race : ${races}">
-                    <td><a th:href="'/races/view/' + ${race.id}" th:text="${race.name}"></a></td>
+                    <td><a th:href="'/races/view/' + ${race.id}" th:text="${race.id}"></a></td>
                 </tr>
             </table>
         </div>

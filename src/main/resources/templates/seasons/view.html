@@ -14,7 +14,7 @@
 
             <table class="table">
                 <tr th:each="season : ${seasons}">
-                    <td><a th:href="'/seasons/view/' + ${season.id}" th:text="${season.name}"></a></td>
+                    <td><a th:href="'/seasons/view/' + ${season.year}" th:text="${season.year}"></a></td>
                 </tr>
             </table>
         </div>
