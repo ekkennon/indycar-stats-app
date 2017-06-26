@@ -98,19 +98,30 @@ public class AddController {
     }
 
     @RequestMapping(value="seasons/add", method=RequestMethod.GET)
-    private String addSeason(Model model) {
+    private String addSeasonForm(Model model) {
         model.addAttribute("title", addSeason);
-        model.addAttribute(new Season());
+        //model.addAttribute(new Season());
         return "seasons/add";
     }
 
     @RequestMapping(value="seasons/add", method=RequestMethod.POST)
-    private String addSeason(Model model, @ModelAttribute @Valid Season season, Errors errors) {
+    private String addSeason(Model model/*, @ModelAttribute @Valid Season season, Errors errors*/) {
+        /*
         if (errors.hasErrors()) {
             model.addAttribute("title", addSeason);
             return "seasons/add";
+        }*/
+        Iterable<Season> seasons = seasonDao.findAll();
+        int newid = 0;
+        for (Season s : seasons) {
+            if (s.getYear() > newid) {
+                newid = s.getYear();
+            }
         }
-        seasonDao.save(season);
+        if (newid > 0) {
+            seasonDao.save(new Season(++newid));
+        }
+
         model.addAttribute("title", "IndyCar Stats App");
         model.addAttribute("seasons", seasonDao.findAll());
         return "redirect:";

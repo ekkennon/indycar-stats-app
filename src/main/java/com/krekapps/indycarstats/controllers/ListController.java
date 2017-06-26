@@ -70,40 +70,18 @@ public class ListController {
         return "drivers/view";
     }
 
-    @RequestMapping(value="races/view")
-    private String racesViewAll(Model model) {
+    @RequestMapping(value="races/list")
+    private String racesList(Model model) {
         model.addAttribute("title", "IndyCar Races List");
         model.addAttribute("races", raceDao.findAll());
-        return "races/view";
+        return "races/list";
     }
 
-    @RequestMapping(value="races/view/{id}")
-    private String racesViewOne(Model model, @PathVariable int id) {
-        Race race = raceDao.findOne(id);
-        List<Race> racelist = new ArrayList<>();
-        racelist.add(race);
-        Iterable<Race> r = racelist;
-        model.addAttribute("title", "IndyCar Race: " + race.toString());
-        model.addAttribute("races", r);
-        return "races/view";
-    }
-
-    @RequestMapping(value="seasons/view")
-    private String seasonsViewAll(Model model) {
+    @RequestMapping(value="seasons/list")
+    private String seasonsList(Model model) {
         model.addAttribute("title", "IndyCar Seasons List");
         model.addAttribute("seasons", seasonDao.findAll());
-        return "seasons/view";
-    }
-
-    @RequestMapping(value="seasons/view/{id}")
-    private String seasonsViewOne(Model model, @PathVariable int id) {
-        Season season = seasonDao.findOne(id);
-        List<Season> seasonlist = new ArrayList<>();
-        seasonlist.add(season);
-        Iterable<Season> s = seasonlist;
-        model.addAttribute("title", "IndyCar Season: " + season.getYear());
-        model.addAttribute("seasons", s);
-        return "seasons/view";
+        return "seasons/list";
     }
 
     @RequestMapping(value="sessions/view")

@@ -60,7 +60,7 @@ public class Race {
         sessions.add(session);
     }
 
-    public void setSessions(ArrayList<Session> sessions) {
+    public void setSessions(List<Session> sessions) {
         this.sessions = sessions;
     }
 }

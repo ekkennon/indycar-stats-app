@@ -8,13 +8,22 @@
         <div class="container body-content">
             <h2 th:text="${title}">IndyCar Stats</h2>
 
-            <div th:unless="${seasons} and ${seasons.size()}">
-                <h4>No Results</h4>
+            <div th:unless="${season.races} and ${season.races.size()}">
+                <h4>No Races</h4>
+            </div>
+
+            <div th:unless="${season.teams} and ${season.teams.size()}">
+                <h4>No Teams</h4>
             </div>
 
             <table class="table">
-                <tr th:each="season : ${seasons}">
-                    <td><a th:href="'/seasons/view/' + ${season.year}" th:text="${season.year}"></a></td>
+                <tr th:each="race : ${season.races}">
+                    <td><a th:href="'/races/view/' + ${race.id}" th:text="${race.track.name}"></a></td>
+                </tr>
+            </table>
+            <table class="table">
+                <tr th:each="team : ${season.teams}">
+                    <td><a th:href="'/teams/view/' + ${team.id}" th:text="${team.name}"></a></td>
                 </tr>
             </table>
         </div>

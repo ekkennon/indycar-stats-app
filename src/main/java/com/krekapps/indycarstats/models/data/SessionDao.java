@@ -1,5 +1,6 @@
 package com.krekapps.indycarstats.models.data;
 
+import com.krekapps.indycarstats.models.Race;
 import com.krekapps.indycarstats.models.Session;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,6 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface SessionDao extends CrudRepository<Session, Integer> {
+
+    Iterable<Session> findByRace(Race race);
 }
