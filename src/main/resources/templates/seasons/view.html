@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head th:replace="fragments :: head"></head>
+    <body>
+
+        <div th:replace="fragments :: page-header"></div>
+
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
+
+            <div th:unless="${seasons} and ${seasons.size()}">
+                <h4>No Results</h4>
+            </div>
+
+            <table class="table">
+                <tr th:each="season : ${seasons}">
+                    <td><a th:href="'/seasons/view/' + ${season.id}" th:text="${season.name}"></a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div th:replace="fragments :: season-footer"></div>
+
+    </body>
+</html>
