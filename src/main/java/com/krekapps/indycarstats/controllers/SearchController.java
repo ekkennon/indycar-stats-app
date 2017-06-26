@@ -19,8 +19,8 @@ import javax.validation.Valid;
  */
 
 @Controller
-@RequestMapping(value="sessions")
-public class SessionController {
+//@RequestMapping(value="sessions")
+public class SearchController {
     private String addTitle = "Add IndyCar Track:";
     private String viewListTitle = "IndyCar Track Sessions";
 
@@ -29,14 +29,14 @@ public class SessionController {
 
     @Autowired
     private TrackDao trackDao;
-
+/*
     @RequestMapping(value="")
     private String index(Model model) {
         model.addAttribute("title", viewListTitle);
         return "sessions/index";
-    }
+    }*/
 
-    @RequestMapping(value="add", method= RequestMethod.GET)
+    @RequestMapping(value="sessions/add", method= RequestMethod.GET)
     private String add(Model model) {
         model.addAttribute("title", addTitle);
         model.addAttribute(new Session());
@@ -44,7 +44,7 @@ public class SessionController {
         return "sessions/add";
     }
 
-    @RequestMapping(value="add", method=RequestMethod.POST)
+    @RequestMapping(value="sessions/add", method=RequestMethod.POST)
     private String add(Model model, @ModelAttribute @Valid Session session, Errors errors, @RequestParam int trackId) {
         if (errors.hasErrors()) {
             model.addAttribute("title", addTitle);
