@@ -17,6 +17,18 @@ public class NavController {
         return "index";
     }
 
+    @RequestMapping(value="add")
+    public String mainAdd(Model model) {
+        model.addAttribute("title", "IndyCar Stats App");
+        return "add";
+    }
+
+    @RequestMapping(value="view")
+    public String mainView(Model model) {
+        model.addAttribute("title", "IndyCar Stats App");
+        return "view";
+    }
+
     @RequestMapping(value="drivers")
     public String driverIndex(Model model) {
         model.addAttribute("title", "IndyCar Drivers");
