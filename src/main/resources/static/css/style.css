@@ -87,3 +87,7 @@ ul.form-group li {
     display: inline-block;
     padding-right: 15px;
 }
+
+.add-form {
+    max-width: 600px;
+}

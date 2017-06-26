@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head th:replace="fragments :: head"></head>
+    <body>
 
-<div th:replace="fragments :: page-header"></div>
+        <div th:replace="fragments :: page-header"></div>
 
-<div class="container body-content">
-    <h2 th:text="${title}">IndyCar Stats</h2>
-    <ul>
-        <li><a href="/tracks/add">Add Tracks</a></li>
-        <li><a href="/drivers/add">Add Drivers</a></li>
-        <li><a href="/seasons/add">Add Seasons</a></li>
-    </ul>
-</div>
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
+            <ul>
+                <li><a href="/tracks/add">Add Tracks</a></li>
+                <li><a href="/drivers/add">Add Drivers</a></li>
+                <li><a href="/seasons/add">Add Seasons</a></li>
+            </ul>
+        </div>
 
-</body>
+    </body>
 </html>
