@@ -35,7 +35,7 @@ public class SearchController {
         model.addAttribute("title", viewListTitle);
         return "sessions/index";
     }*/
-
+/*
     @RequestMapping(value="sessions/add", method= RequestMethod.GET)
     private String add(Model model) {
         model.addAttribute("title", addTitle);
@@ -55,5 +55,5 @@ public class SearchController {
         model.addAttribute("title", viewListTitle);
         model.addAttribute("tracks", sessionDao.findAll());
         return "redirect:";
-    }
+    }*/
 }
