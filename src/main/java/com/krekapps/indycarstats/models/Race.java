@@ -1,6 +1,7 @@
 package com.krekapps.indycarstats.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,10 @@ public class Race {
     @GeneratedValue
     private int id;
 
+    @NotNull
+    private String name;
+
+    @NotNull
     @ManyToOne
     private Season season;
 
@@ -22,6 +27,7 @@ public class Race {
     @JoinColumn(name="race_id")
     private List<Session> sessions = new ArrayList<>();
 
+    @NotNull
     @ManyToOne
     private Track track;
 
@@ -34,6 +40,14 @@ public class Race {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Season getSeason() {

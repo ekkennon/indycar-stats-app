@@ -8,20 +8,23 @@
         <div class="container body-content">
             <h2 th:text="${title}">IndyCar Stats</h2>
 
-            <form method="post" class="add-form" th:object="${session}">
+            <form method="post" action="/sessions/add" class="add-form" th:object="${form}">
                 <div class="form-group">
                     <input placeholder="Name" class="form-control" th:field="*{name}" required="required"/>
                     <span th:errors="*{name}" class="error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label th:for="trackId">Track</label>
-                    <select name="trackId">
-                        <option th:each="track : ${tracks}"
-                                th:text="${track.name}"
-                                th:value="${track.id}"></option>
+                    <label th:for="raceid">Races</label>
+                    <select name="raceid">
+                        <option th:each="race : *{races}"
+                                th:text="${race.name}"
+                                th:value="${race.id}"></option>
                     </select>
+                    <span th:errors="*{raceid}" class="error"></span>
                 </div>
+
+                <!--<input type="hidden" name="raceid" th:value="race.id" />-->
 
                 <input type="submit" value="Add Session" />
             </form>

@@ -84,11 +84,11 @@ public class ListController {
         return "seasons/list";
     }
 
-    @RequestMapping(value="sessions/view")
+    @RequestMapping(value="sessions/list")
     private String sessionsViewAll(Model model) {
         model.addAttribute("title", "IndyCar Sessions List");
-        model.addAttribute("sessions", sessionDao.findAll());
-        return "sessions/view";
+        model.addAttribute("sessions", sessionDao.findAll());//TODO here and /races/view/{id} display race info also
+        return "sessions/list";
     }
 
     @RequestMapping(value="sessions/view/{id}")

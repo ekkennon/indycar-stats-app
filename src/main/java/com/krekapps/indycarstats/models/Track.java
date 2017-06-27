@@ -2,6 +2,7 @@ package com.krekapps.indycarstats.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by ekk on 25-Jun-17.
@@ -16,6 +17,9 @@ public class Track {
 
     @NotNull
     private String name;
+
+    @OneToMany
+    private List<Race> races;
 
     public Track() {
     }
@@ -34,5 +38,13 @@ public class Track {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Race> getRaces() {
+        return races;
+    }
+
+    public void setRaces(List<Race> races) {
+        this.races = races;
     }
 }

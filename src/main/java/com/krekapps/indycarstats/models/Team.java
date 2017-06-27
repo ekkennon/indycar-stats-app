@@ -1,10 +1,9 @@
 package com.krekapps.indycarstats.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ekk on 25-Jun-17.
@@ -20,8 +19,12 @@ public class Team {
     @NotNull
     private String name;
 
+    @NotNull
     @ManyToOne
     private Season season;
+
+    @ManyToMany
+    private List<Driver> drivers;//TODO should this be not null?
 
     public Team() {
     }
@@ -48,5 +51,13 @@ public class Team {
 
     public void setSeason(Season season) {
         this.season = season;
+    }
+
+    public List<Driver> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(List<Driver> drivers) {
+        this.drivers = drivers;
     }
 }

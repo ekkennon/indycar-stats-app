@@ -19,6 +19,7 @@ public class Session {
     @NotNull
     private String name;
 
+    @NotNull
     @ManyToOne
     private Race race;
 

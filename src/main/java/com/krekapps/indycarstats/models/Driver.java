@@ -19,6 +19,9 @@ public class Driver {
     @NotNull
     private String name;
 
+    @ManyToMany(mappedBy = "drivers")
+    private List<Team> teams;
+
     @OneToMany
     @JoinColumn(name="driver_id")
     private List<DecimalStat> decimalStats = new ArrayList<>();
@@ -52,6 +55,14 @@ public class Driver {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     public List<DecimalStat> getDecimalStats() {

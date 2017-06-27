@@ -2,6 +2,9 @@ package com.krekapps.indycarstats.controllers;
 
 import com.krekapps.indycarstats.models.*;
 import com.krekapps.indycarstats.models.data.*;
+import com.krekapps.indycarstats.models.forms.RaceAddForm;
+import com.krekapps.indycarstats.models.forms.SessionAddForm;
+import com.krekapps.indycarstats.models.forms.TeamAddForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ekk on 25-Jun-17.
@@ -22,7 +26,6 @@ import java.util.ArrayList;
 public class AddController {
     private final String addDriver = "Add IndyCar Driver:";
     private final String addRace = "Add IndyCar Race:";
-    private final String addSeason = "Add IndyCar Season:";
     private final String addSession = "Add IndyCar Session:";
     private final String addStat = "Add IndyCar Stat:";
     private final String addTeam = "Add IndyCar Team:";
@@ -79,18 +82,25 @@ public class AddController {
 
     @RequestMapping(value="races/add", method=RequestMethod.GET)
     private String addRace(Model model) {
+        RaceAddForm raceAddForm = new RaceAddForm(seasonDao.findAll(), trackDao.findAll());
+
         model.addAttribute("title", addRace);
-        model.addAttribute(new Race());
+        model.addAttribute("form", raceAddForm);
         return "races/add";
     }
 
     @RequestMapping(value="races/add", method=RequestMethod.POST)
-    private String addRace(Model model, @ModelAttribute @Valid Race race, Errors errors) {
+    private String addRace(Model model, @ModelAttribute @Valid RaceAddForm raceAddForm, Errors errors) {
         if (errors.hasErrors()) {
             model.addAttribute("title", addRace);
+            model.addAttribute("form", raceAddForm);
             return "races/add";
         }
 
+        Race race = new Race();
+        race.setName(raceAddForm.getName());
+        race.setSeason(seasonDao.findOne(raceAddForm.getYear()));
+        race.setTrack(trackDao.findOne(raceAddForm.getTrackid()));
         raceDao.save(race);
         model.addAttribute("title", "IndyCar Stats App");
         model.addAttribute("races", raceDao.findAll());
@@ -99,18 +109,12 @@ public class AddController {
 
     @RequestMapping(value="seasons/add", method=RequestMethod.GET)
     private String addSeasonForm(Model model) {
-        model.addAttribute("title", addSeason);
-        //model.addAttribute(new Season());
+        model.addAttribute("title", "Add IndyCar Season:");
         return "seasons/add";
     }
 
     @RequestMapping(value="seasons/add", method=RequestMethod.POST)
-    private String addSeason(Model model/*, @ModelAttribute @Valid Season season, Errors errors*/) {
-        /*
-        if (errors.hasErrors()) {
-            model.addAttribute("title", addSeason);
-            return "seasons/add";
-        }*/
+    private String addSeason(Model model) {
         Iterable<Season> seasons = seasonDao.findAll();
         int newid = 0;
         for (Season s : seasons) {
@@ -128,18 +132,36 @@ public class AddController {
     }
 
     @RequestMapping(value="sessions/add", method=RequestMethod.GET)
-    private String addSession(Model model) {
+    private String addSessionFromRace(Model model) {
+        Iterable<Race> races = raceDao.findAll();
+        SessionAddForm sessionAddForm = new SessionAddForm(races);
+
         model.addAttribute("title", addSession);
-        model.addAttribute(new Session());
+        model.addAttribute("form", sessionAddForm);
+        return "sessions/add";
+    }
+
+    @RequestMapping(value="sessions/add/{id}", method=RequestMethod.GET)
+    private String addSessionFromRace(Model model, @PathVariable int id) {
+        Race race = raceDao.findOne(id);
+        SessionAddForm sessionAddForm = new SessionAddForm(race);
+
+        model.addAttribute("title", addSession);
+        model.addAttribute("form", sessionAddForm);
         return "sessions/add";
     }
 
     @RequestMapping(value="sessions/add", method=RequestMethod.POST)
-    private String addSession(Model model, @ModelAttribute @Valid Session session, Errors errors) {
+    private String addSession(Model model, @ModelAttribute @Valid SessionAddForm sessionAddForm, Errors errors) {
         if (errors.hasErrors()) {
             model.addAttribute("title", addSession);
-            return "sessions/add";
+            model.addAttribute("form", sessionAddForm);
+            return "sessions/add/" + sessionAddForm.getRaceid();
         }
+
+        Session session = new Session();
+        session.setName(sessionAddForm.getName());
+        session.setRace(raceDao.findOne(sessionAddForm.getRaceid()));
 
         sessionDao.save(session);
         model.addAttribute("title", "IndyCar Stats App");
@@ -225,17 +247,32 @@ public class AddController {
 
     @RequestMapping(value="teams/add", method=RequestMethod.GET)
     private String addTeam(Model model) {
+        TeamAddForm teamAddForm = new TeamAddForm(seasonDao.findAll(), driverDao.findAll());
+
         model.addAttribute("title", addTeam);
-        model.addAttribute(new Team());
+        model.addAttribute("form", teamAddForm);
         return "teams/add";
     }
 
     @RequestMapping(value="teams/add", method=RequestMethod.POST)
-    private String addTeam(Model model, @ModelAttribute @Valid Team team, Errors errors) {
+    private String addTeam(Model model, @ModelAttribute @Valid TeamAddForm teamAddForm, Errors errors) {
         if (errors.hasErrors()) {
             model.addAttribute("title", addTeam);
+            model.addAttribute("form", teamAddForm);
             return "teams/add";
         }
+
+        List<Driver> drivers = new ArrayList<>();
+        int[] driverids = teamAddForm.getDriverids();
+
+        for (int id : driverids) {
+            drivers.add(driverDao.findOne(id));
+        }
+
+        Team team = new Team();
+        team.setName(teamAddForm.getName());
+        team.setSeason(seasonDao.findOne(teamAddForm.getYear()));
+        team.setDrivers(drivers);
 
         teamDao.save(team);
         model.addAttribute("title", "IndyCar Stats App");
