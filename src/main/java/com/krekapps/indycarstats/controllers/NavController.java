@@ -17,6 +17,11 @@ public class NavController {
         return "index";
     }
 
+    @RequestMapping(value="login")
+    public String login() {
+        return "login";
+    }
+
     @RequestMapping(value="add")
     public String mainAdd(Model model) {
         model.addAttribute("title", "IndyCar Stats App");

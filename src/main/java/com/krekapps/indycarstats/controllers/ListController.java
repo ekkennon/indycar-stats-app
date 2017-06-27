@@ -97,7 +97,7 @@ public class ListController {
         List<Session> sessionlist = new ArrayList<>();
         sessionlist.add(session);
         Iterable<Session> s = sessionlist;
-        model.addAttribute("title", "IndyCar Session: " + session.getName());
+        model.addAttribute("title", "IndyCar Session: " + session.getName());//TODO display year + trackname + sessionname
         model.addAttribute("sessions", s);
         return "sessions/view";
     }
