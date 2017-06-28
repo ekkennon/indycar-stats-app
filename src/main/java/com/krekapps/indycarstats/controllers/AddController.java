@@ -15,14 +15,14 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
+
 /**
  * Created by ekk on 25-Jun-17.
  */
 
 @Controller
 public class AddController {
-    private AdminSession adminSession = new AdminSession(false);
-
     private final String addDriver = "Add IndyCar Driver:";
     private final String addRace = "Add IndyCar Race:";
     private final String addSession = "Add IndyCar Session:";
@@ -62,10 +62,16 @@ public class AddController {
 
     @RequestMapping(value="drivers/add", method=RequestMethod.GET)
     private String addDriver(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Drivers without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
         model.addAttribute("title", addDriver);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new Driver());
         return "drivers/add";
+
     }
 
     @RequestMapping(value="drivers/add", method=RequestMethod.POST)
@@ -87,6 +93,12 @@ public class AddController {
 
     @RequestMapping(value="races/add", method=RequestMethod.GET)
     private String addRace(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Races without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         RaceAddForm raceAddForm = new RaceAddForm(seasonDao.findAll(), trackDao.findAll());
 
         model.addAttribute("title", addRace);
@@ -120,6 +132,12 @@ public class AddController {
 
     @RequestMapping(value="seasons/add", method=RequestMethod.GET)
     private String addSeasonForm(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Seasons without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         model.addAttribute("title", "Add IndyCar Season:");
         model.addAttribute("loggedin", adminSession.isSignedInString());
         return "seasons/add";
@@ -149,6 +167,12 @@ public class AddController {
 
     @RequestMapping(value="sessions/add", method=RequestMethod.GET)
     private String addSessionFromRace(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Sessions without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         Iterable<Race> races = raceDao.findAll();
         SessionAddForm sessionAddForm = new SessionAddForm(races);
 
@@ -160,6 +184,12 @@ public class AddController {
 
     @RequestMapping(value="sessions/add/{id}", method=RequestMethod.GET)
     private String addSessionFromRace(Model model, @PathVariable int id) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Sessions without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         Race race = raceDao.findOne(id);
         SessionAddForm sessionAddForm = new SessionAddForm(race);
 
@@ -194,6 +224,12 @@ public class AddController {
 
     @RequestMapping(value="stats/decimal/add", method=RequestMethod.GET)
     private String addDecimalStat(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Stats without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         model.addAttribute("title", addStat);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new DecimalStat());
@@ -219,6 +255,12 @@ public class AddController {
 
     @RequestMapping(value="stats/int/add", method=RequestMethod.GET)
     private String addIntStat(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Stats without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         model.addAttribute("title", addStat);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new IntStat());
@@ -244,6 +286,12 @@ public class AddController {
 
     @RequestMapping(value="stats/string/add", method=RequestMethod.GET)
     private String addStringStat(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Stats without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         model.addAttribute("title", addStat);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new StringStat());
@@ -269,6 +317,12 @@ public class AddController {
 
     @RequestMapping(value="stats/time/add", method=RequestMethod.GET)
     private String addTimeStat(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Stats without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         model.addAttribute("title", addStat);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new TimeStat());
@@ -294,6 +348,12 @@ public class AddController {
 
     @RequestMapping(value="teams/add", method=RequestMethod.GET)
     private String addTeam(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Teams without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         TeamAddForm teamAddForm = new TeamAddForm(seasonDao.findAll(), driverDao.findAll());
 
         model.addAttribute("title", addTeam);
@@ -335,6 +395,12 @@ public class AddController {
 
     @RequestMapping(value="tracks/add", method=RequestMethod.GET)
     private String addTrack(Model model) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", "Unable to add Tracks without Admin privilage.");
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "index";
+        }
+
         model.addAttribute("title", addTrack);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new Track());

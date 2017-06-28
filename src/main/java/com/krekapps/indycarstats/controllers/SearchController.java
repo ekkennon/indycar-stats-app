@@ -1,6 +1,5 @@
 package com.krekapps.indycarstats.controllers;
 
-import com.krekapps.indycarstats.models.AdminSession;
 import com.krekapps.indycarstats.models.Race;
 import com.krekapps.indycarstats.models.Season;
 import com.krekapps.indycarstats.models.Session;
@@ -11,12 +10,9 @@ import com.krekapps.indycarstats.models.data.SessionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
 
 /**
  * Created by ekk on 25-Jun-17.
@@ -24,8 +20,6 @@ import java.util.List;
 
 @Controller
 public class SearchController {
-    private AdminSession adminSession = new AdminSession(false);
-
     private String addTitle = "Add IndyCar Track:";
     private String viewListTitle = "IndyCar Track Sessions";
 

@@ -1,11 +1,12 @@
 package com.krekapps.indycarstats.controllers;
 
-import com.krekapps.indycarstats.models.AdminSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
 
 /**
  * Created by ekk on 25-Jun-17.
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class NavController {
-    private AdminSession adminSession = new AdminSession(false);
-
     @RequestMapping(value="")
     public String index(Model model) {
         model.addAttribute("title", "IndyCar Stats App");
