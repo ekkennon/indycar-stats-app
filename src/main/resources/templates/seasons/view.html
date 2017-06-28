@@ -29,6 +29,8 @@
         </div>
 
         <div th:replace="fragments :: season-footer"></div>
-
+        <form id="loginform" method="post">
+            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
+        </form>
     </body>
 </html>

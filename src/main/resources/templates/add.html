@@ -16,6 +16,8 @@
                 <li><a href="/sessions/add">Add Session</a></li>
             </ul>
         </div>
-
+        <form id="loginform" method="post">
+            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
+        </form>
     </body>
 </html>

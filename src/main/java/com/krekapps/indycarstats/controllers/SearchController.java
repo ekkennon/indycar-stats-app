@@ -1,5 +1,6 @@
 package com.krekapps.indycarstats.controllers;
 
+import com.krekapps.indycarstats.models.AdminSession;
 import com.krekapps.indycarstats.models.Race;
 import com.krekapps.indycarstats.models.Season;
 import com.krekapps.indycarstats.models.Session;
@@ -23,6 +24,8 @@ import java.util.List;
 
 @Controller
 public class SearchController {
+    private AdminSession adminSession = new AdminSession(false);
+
     private String addTitle = "Add IndyCar Track:";
     private String viewListTitle = "IndyCar Track Sessions";
 
@@ -43,6 +46,7 @@ public class SearchController {
         Race race = raceDao.findOne(id);
         Iterable<Session> sessions = sessionDao.findByRace(race);
         model.addAttribute("title", "IndyCar Race: " + race.getSeason().getYear() + " " + race.getTrack().getName());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("sessions", sessions);
         return "sessions/list";
     }
@@ -51,6 +55,7 @@ public class SearchController {
     private String seasonsViewOne(Model model, @PathVariable int id) {
         Season season = seasonDao.findOne(id);
         model.addAttribute("title", "IndyCar Season: " + season.getYear());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("season", season);
         return "seasons/view";
     }

@@ -20,6 +20,8 @@ import java.util.List;
 
 @Controller
 public class ListController {
+    private AdminSession adminSession = new AdminSession(false);
+
     private String statsTitle = "IndyCar Stats List";
 
     @Autowired
@@ -55,6 +57,7 @@ public class ListController {
     @RequestMapping(value="drivers/view")
     private String driversViewAll(Model model) {
         model.addAttribute("title", "IndyCar Drivers List");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("drivers", driverDao.findAll());
         return "drivers/view";
     }
@@ -66,6 +69,7 @@ public class ListController {
         driverlist.add(driver);
         Iterable<Driver> d = driverlist;
         model.addAttribute("title", "IndyCar Driver: " + driver.getName());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("drivers", d);
         return "drivers/view";
     }
@@ -73,6 +77,7 @@ public class ListController {
     @RequestMapping(value="races/list")
     private String racesList(Model model) {
         model.addAttribute("title", "IndyCar Races List");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("races", raceDao.findAll());
         return "races/list";
     }
@@ -80,6 +85,7 @@ public class ListController {
     @RequestMapping(value="seasons/list")
     private String seasonsList(Model model) {
         model.addAttribute("title", "IndyCar Seasons List");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("seasons", seasonDao.findAll());
         return "seasons/list";
     }
@@ -87,6 +93,7 @@ public class ListController {
     @RequestMapping(value="sessions/list")
     private String sessionsViewAll(Model model) {
         model.addAttribute("title", "IndyCar Sessions List");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("sessions", sessionDao.findAll());//TODO here and /races/view/{id} display race info also
         return "sessions/list";
     }
@@ -98,6 +105,7 @@ public class ListController {
         sessionlist.add(session);
         Iterable<Session> s = sessionlist;
         model.addAttribute("title", "IndyCar Session: " + session.getName());//TODO display year + trackname + sessionname
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("sessions", s);
         return "sessions/view";
     }
@@ -105,6 +113,7 @@ public class ListController {
     @RequestMapping(value="stats/decimal/view")
     private String statsDecimalViewAll(Model model) {
         model.addAttribute("title", statsTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", decimalStatDao.findAll());
         return "stats/view";
     }
@@ -112,6 +121,7 @@ public class ListController {
     @RequestMapping(value="stats/int/view")
     private String statsIntViewAll(Model model) {
         model.addAttribute("title", statsTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", intStatDao.findAll());
         return "stats/view";
     }
@@ -119,6 +129,7 @@ public class ListController {
     @RequestMapping(value="stats/string/view")
     private String statsDtringViewAll(Model model) {
         model.addAttribute("title", statsTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", stringStatDao.findAll());
         return "stats/view";
     }
@@ -126,6 +137,7 @@ public class ListController {
     @RequestMapping(value="stats/time/view")
     private String statsTimeViewAll(Model model) {
         model.addAttribute("title", statsTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", timeStatDao.findAll());
         return "stats/view";
     }
@@ -137,6 +149,7 @@ public class ListController {
         statlist.add(stat);
         Iterable<DecimalStat> s = statlist;
         model.addAttribute("title", "IndyCar Stat: " + stat.getName());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", s);
         return "stats/view";
     }
@@ -148,6 +161,7 @@ public class ListController {
         statlist.add(stat);
         Iterable<IntStat> s = statlist;
         model.addAttribute("title", "IndyCar Stat: " + stat.getName());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", s);
         return "stats/view";
     }
@@ -159,6 +173,7 @@ public class ListController {
         statlist.add(stat);
         Iterable<StringStat> s = statlist;
         model.addAttribute("title", "IndyCar Stat: " + stat.getName());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", s);
         return "stats/view";
     }
@@ -170,6 +185,7 @@ public class ListController {
         statlist.add(stat);
         Iterable<TimeStat> s = statlist;
         model.addAttribute("title", "IndyCar Stat: " + stat.getName());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", s);
         return "stats/view";
     }
@@ -177,6 +193,7 @@ public class ListController {
     @RequestMapping(value="teams/view")
     private String teamsViewAll(Model model) {
         model.addAttribute("title", "IndyCar Teams List");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("teams", teamDao.findAll());
         return "teams/view";
     }
@@ -188,6 +205,7 @@ public class ListController {
         teamlist.add(team);
         Iterable<Team> t = teamlist;
         model.addAttribute("title", "IndyCar Team: " + team.getName());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("teams", t);
         return "teams/view";
     }
@@ -195,6 +213,7 @@ public class ListController {
     @RequestMapping(value="tracks/view")
     private String tracksViewAll(Model model) {
         model.addAttribute("title", "IndyCar Tracks List");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("tracks", trackDao.findAll());
         return "tracks/view";
     }
@@ -206,6 +225,7 @@ public class ListController {
         tracklist.add(track);
         Iterable<Track> t = tracklist;
         model.addAttribute("title", "IndyCar Track: " + track.getName());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("tracks", t);
         return "tracks/view";
     }

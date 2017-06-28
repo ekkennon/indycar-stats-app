@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -24,6 +21,8 @@ import java.util.List;
 
 @Controller
 public class AddController {
+    private AdminSession adminSession = new AdminSession(false);
+
     private final String addDriver = "Add IndyCar Driver:";
     private final String addRace = "Add IndyCar Race:";
     private final String addSession = "Add IndyCar Session:";
@@ -64,18 +63,24 @@ public class AddController {
     @RequestMapping(value="drivers/add", method=RequestMethod.GET)
     private String addDriver(Model model) {
         model.addAttribute("title", addDriver);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new Driver());
         return "drivers/add";
     }
 
     @RequestMapping(value="drivers/add", method=RequestMethod.POST)
-    private String addDriver(Model model, @ModelAttribute @Valid Driver driver, Errors errors) {
+    private String addDriver(Model model, @ModelAttribute @Valid Driver driver, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addDriver);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             return "drivers/add";
         }
         driverDao.save(driver);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("drivers", driverDao.findAll());
         return "redirect:";
     }
@@ -85,14 +90,19 @@ public class AddController {
         RaceAddForm raceAddForm = new RaceAddForm(seasonDao.findAll(), trackDao.findAll());
 
         model.addAttribute("title", addRace);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("form", raceAddForm);
         return "races/add";
     }
 
     @RequestMapping(value="races/add", method=RequestMethod.POST)
-    private String addRace(Model model, @ModelAttribute @Valid RaceAddForm raceAddForm, Errors errors) {
+    private String addRace(Model model, @ModelAttribute @Valid RaceAddForm raceAddForm, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addRace);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             model.addAttribute("form", raceAddForm);
             return "races/add";
         }
@@ -103,6 +113,7 @@ public class AddController {
         race.setTrack(trackDao.findOne(raceAddForm.getTrackid()));
         raceDao.save(race);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("races", raceDao.findAll());
         return "redirect:";
     }
@@ -110,11 +121,15 @@ public class AddController {
     @RequestMapping(value="seasons/add", method=RequestMethod.GET)
     private String addSeasonForm(Model model) {
         model.addAttribute("title", "Add IndyCar Season:");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         return "seasons/add";
     }
 
     @RequestMapping(value="seasons/add", method=RequestMethod.POST)
-    private String addSeason(Model model) {
+    private String addSeason(Model model, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         Iterable<Season> seasons = seasonDao.findAll();
         int newid = 0;
         for (Season s : seasons) {
@@ -127,6 +142,7 @@ public class AddController {
         }
 
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("seasons", seasonDao.findAll());
         return "redirect:";
     }
@@ -137,6 +153,7 @@ public class AddController {
         SessionAddForm sessionAddForm = new SessionAddForm(races);
 
         model.addAttribute("title", addSession);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("form", sessionAddForm);
         return "sessions/add";
     }
@@ -147,14 +164,19 @@ public class AddController {
         SessionAddForm sessionAddForm = new SessionAddForm(race);
 
         model.addAttribute("title", addSession);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("form", sessionAddForm);
         return "sessions/add";
     }
 
     @RequestMapping(value="sessions/add", method=RequestMethod.POST)
-    private String addSession(Model model, @ModelAttribute @Valid SessionAddForm sessionAddForm, Errors errors) {
+    private String addSession(Model model, @ModelAttribute @Valid SessionAddForm sessionAddForm, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addSession);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             model.addAttribute("form", sessionAddForm);
             return "sessions/add/" + sessionAddForm.getRaceid();
         }
@@ -165,6 +187,7 @@ public class AddController {
 
         sessionDao.save(session);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("sessions", sessionDao.findAll());
         return "redirect:";
     }
@@ -172,18 +195,24 @@ public class AddController {
     @RequestMapping(value="stats/decimal/add", method=RequestMethod.GET)
     private String addDecimalStat(Model model) {
         model.addAttribute("title", addStat);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new DecimalStat());
         return "stats/add";
     }
 
     @RequestMapping(value="stats/decimal/add", method=RequestMethod.POST)
-    private String addDecimalStat(Model model, @ModelAttribute @Valid DecimalStat stat, Errors errors) {
+    private String addDecimalStat(Model model, @ModelAttribute @Valid DecimalStat stat, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addStat);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             return "stats/add";
         }
         decimalStatDao.save(stat);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", decimalStatDao.findAll());
         return "redirect:";
     }
@@ -191,18 +220,24 @@ public class AddController {
     @RequestMapping(value="stats/int/add", method=RequestMethod.GET)
     private String addIntStat(Model model) {
         model.addAttribute("title", addStat);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new IntStat());
         return "stats/add";
     }
 
     @RequestMapping(value="stats/int/add", method=RequestMethod.POST)
-    private String addIntStat(Model model, @ModelAttribute @Valid IntStat stat, Errors errors) {
+    private String addIntStat(Model model, @ModelAttribute @Valid IntStat stat, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addStat);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             return "stats/add";
         }
         intStatDao.save(stat);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", intStatDao.findAll());
         return "redirect:";
     }
@@ -210,18 +245,24 @@ public class AddController {
     @RequestMapping(value="stats/string/add", method=RequestMethod.GET)
     private String addStringStat(Model model) {
         model.addAttribute("title", addStat);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new StringStat());
         return "stats/add";
     }
 
     @RequestMapping(value="stats/string/add", method=RequestMethod.POST)
-    private String addStringStat(Model model, @ModelAttribute @Valid StringStat stat, Errors errors) {
+    private String addStringStat(Model model, @ModelAttribute @Valid StringStat stat, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addStat);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             return "stats/add";
         }
         stringStatDao.save(stat);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", stringStatDao.findAll());
         return "redirect:";
     }
@@ -229,18 +270,24 @@ public class AddController {
     @RequestMapping(value="stats/time/add", method=RequestMethod.GET)
     private String addTimeStat(Model model) {
         model.addAttribute("title", addStat);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new TimeStat());
         return "stats/add";
     }
 
     @RequestMapping(value="stats/time/add", method=RequestMethod.POST)
-    private String addTimeStat(Model model, @ModelAttribute @Valid TimeStat stat, Errors errors) {
+    private String addTimeStat(Model model, @ModelAttribute @Valid TimeStat stat, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addStat);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             return "stats/add";
         }
         timeStatDao.save(stat);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", timeStatDao.findAll());
         return "redirect:";
     }
@@ -250,14 +297,19 @@ public class AddController {
         TeamAddForm teamAddForm = new TeamAddForm(seasonDao.findAll(), driverDao.findAll());
 
         model.addAttribute("title", addTeam);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("form", teamAddForm);
         return "teams/add";
     }
 
     @RequestMapping(value="teams/add", method=RequestMethod.POST)
-    private String addTeam(Model model, @ModelAttribute @Valid TeamAddForm teamAddForm, Errors errors) {
+    private String addTeam(Model model, @ModelAttribute @Valid TeamAddForm teamAddForm, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addTeam);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             model.addAttribute("form", teamAddForm);
             return "teams/add";
         }
@@ -276,6 +328,7 @@ public class AddController {
 
         teamDao.save(team);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("teams", teamDao.findAll());
         return "redirect:";
     }
@@ -283,19 +336,25 @@ public class AddController {
     @RequestMapping(value="tracks/add", method=RequestMethod.GET)
     private String addTrack(Model model) {
         model.addAttribute("title", addTrack);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new Track());
         return "tracks/add";
     }
 
     @RequestMapping(value="tracks/add", method=RequestMethod.POST)
-    private String addTrack(Model model, @ModelAttribute @Valid Track track, Errors errors) {
+    private String addTrack(Model model, @ModelAttribute @Valid Track track, Errors errors, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
         if (errors.hasErrors()) {
             model.addAttribute("title", addTrack);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
             return "tracks/add";
         }
 
         trackDao.save(track);
         model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("tracks", trackDao.findAll());
         return "tracks/view";
     }

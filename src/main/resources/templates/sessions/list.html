@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body>
+    <head th:replace="fragments :: head"></head>
+    <body>
 
-<div th:replace="fragments :: page-header"></div>
+        <div th:replace="fragments :: page-header"></div>
 
-<div class="container body-content">
-    <h2 th:text="${title}">IndyCar Stats</h2>
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
 
-    <table class="table">
-        <tr th:each="session : ${sessions}">
-            <td><a th:href="'/sessions/view/' + ${session.id}" th:text="${session.name}"></a></td>
-        </tr>
-    </table>
-</div>
+            <table class="table">
+                <tr th:each="session : ${sessions}">
+                    <td><a th:href="'/sessions/view/' + ${session.id}" th:text="${session.name}"></a></td>
+                </tr>
+            </table>
+        </div>
 
-<div th:replace="fragments :: session-footer"></div>
-
-</body>
+        <div th:replace="fragments :: session-footer"></div>
+        <form id="loginform" method="post">
+            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
+        </form>
+    </body>
 </html>
