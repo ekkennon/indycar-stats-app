@@ -3,13 +3,19 @@
 
     <head th:fragment="head">
 
-        <!-- Bootstrap stylesheets and script -->
         <meta charset="UTF-8"/>
         <title th:text="${title}">IndyCar Stats</title>
 
+        <!-- Bootstrap stylesheets and script -->
         <link th:href="@{/css/style.css}" rel="stylesheet" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- for Google Auth -->
+        <script src="https://apis.google.com/js/platform.js" async="async" defer="defer" ></script>
+        <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"/>
+        <meta name="google-signin-scope" content="profile"/>
     </head>
 
     <body>
@@ -21,6 +27,17 @@
                     <a th:href="@{/view}" class="navbar-brand">View Data</a>
                     <a th:href="@{/add}" class="navbar-brand">Add Data</a>
                     <a th:href="@{/login}" class="navbar-brand">Admin</a>
+                    <div class="g-signin2" data-onsuccess="checkSignedIn"></div>
+                    <script>
+                        function checkSignedIn() {
+                            gapi.load('auth2', function() {
+                                auth2 = gapi.auth2.getAuthInstance();
+                                if (auth2.isSignedIn.get()) {
+                                    alert("signedin ");
+                                }
+                            });
+                        };
+                    </script>
                 </div>
             </div>
         </div>

@@ -1,45 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <script src="https://apis.google.com/js/platform.js" async="async" defer="defer" ></script>
-    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com"/>
-    <meta name="google-signin-scope" content="profile"/>
-</head>
-<body>
+    <head th:replace="fragments :: head"></head>
+    <body>
 
-<div th:replace="fragments :: page-header"></div>
+        <div th:replace="fragments :: page-header"></div>
 
-<div class="container body-content">
-    <h2 th:text="${title}">IndyCar Stats</h2>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-</div>
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
+            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+            <a href="#" onclick="signOut();">Sign out</a>
+        </div>
 
-<script>
-    function onSignIn() {
-        gapi.load('auth2', function() {
-            auth2 = gapi.auth2.getAuthInstance();
-            auth2.signIn();
-        });
-    };
-</script>
+        <script>
+            function onSignIn() {
+                gapi.load('auth2', function() {
+                    auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signIn();
+                });
+            };
+        </script>
 
-<a href="#" onclick="checkSignedIn();">Check Signed In</a>
-<script>
-  function checkSignedIn() {
-    gapi.load('auth2', function() {
-        auth2 = gapi.auth2.getAuthInstance();
-    });
-    console.log(auth2.isSignedIn.get());
-};
-</script>
+        <script>
+          function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut();
+          };
+        </script>
 
-<a href="#" onclick="signOut();">Sign out</a>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut();
-  };
-</script>
-
-</body>
+    </body>
 </html>
