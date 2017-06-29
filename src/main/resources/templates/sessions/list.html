@@ -13,11 +13,14 @@
                     <td><a th:href="'/sessions/view/' + ${session.id}" th:text="${session.name}"></a></td>
                 </tr>
             </table>
+            <ul>
+                <li><a href="/sessions/add">Add Session</a></li>
+                <li><a href="/sessions/list">View All Sessions</a></li>
+            </ul>
         </div>
 
         <div th:replace="fragments :: session-footer"></div>
-        <form id="loginform" method="post">
-            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
-        </form>
+
+        <form th:replace="fragments :: lform"></form>
     </body>
 </html>

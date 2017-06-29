@@ -17,11 +17,13 @@
                     <td><a th:href="'/tracks/view/' + ${track.id}" th:text="${track.name}"></a></td>
                 </tr>
             </table>
+            <ul>
+                <li><a href="/tracks/add">Add Track</a></li>
+            </ul>
         </div>
 
         <div th:replace="fragments :: track-footer"></div>
-        <form id="loginform" method="post">
-            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
-        </form>
+
+        <form th:replace="fragments :: lform"></form>
     </body>
 </html>

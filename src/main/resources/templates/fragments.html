@@ -35,36 +35,8 @@
             <div class="container">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a th:href="@{/drivers/view}">Drivers List</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div th:fragment="track-footer" class="navbar navbar-inverse navbar-fixed-bottom">
-            <div class="container">
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a th:href="@{/tracks/view}">Tracks List</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div th:fragment="session-footer" class="navbar navbar-inverse navbar-fixed-bottom">
-            <div class="container">
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a th:href="@{/sessions/list}">View Sessions</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div th:fragment="team-footer" class="navbar navbar-inverse navbar-fixed-bottom">
-            <div class="container">
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{/drivers/view}">View Drivers</a></li>
+                        <li><a th:href="@{/drivers/add}">Add Driver</a></li>
                         <li><a th:href="@{/teams/view}">View Teams</a></li>
                     </ul>
                 </div>
@@ -76,6 +48,11 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a th:href="@{/races/list}">View Races</a></li>
+                        <li><a th:href="@{/races/add}">Add Races</a></li>
+                        <li><a th:href="@{/seasons/list}">View Seasons</a></li>
+                        <li><a th:href="@{/tracks/list}">View Tracks</a></li>
+                        <li><a th:href="@{/sessions/list}">View Sessions</a></li>
+                        <li><a th:href="@{/sessions/add}">Add Sessions</a></li>
                     </ul>
                 </div>
             </div>
@@ -86,6 +63,24 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a th:href="@{/seasons/list}">View Seasons</a></li>
+                        <li><a th:href="@{/seasons/add}">Add Season</a></li>
+                        <li><a th:href="@{/races/list}">View Races</a></li>
+                        <li><a th:href="@{/races/add}">Add Race</a></li>
+                        <li><a th:href="@{/drivers/view}">View Drivers</a></li>
+                        <li><a th:href="@{/drivers/add}">Add Driver</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div th:fragment="session-footer" class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{/sessions/list}">View Sessions</a></li>
+                        <li><a th:href="@{/sessions/add}">Add Session</a></li>
+                        <li><a th:href="@{/races/view}">View Races</a></li>
+                        <li><a th:href="@{/races/add}">Add Race</a></li>
                     </ul>
                 </div>
             </div>
@@ -95,11 +90,38 @@
             <div class="container">
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a th:href="@{/sessions/add}">Add Session</a></li>
+                        <li><a th:href="@{/stats/add}">Add Stats</a></li>
                     </ul>
                 </div>
             </div>
         </div>
+
+        <div th:fragment="team-footer" class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{/teams/view}">View Teams</a></li>
+                        <li><a th:href="@{/teams/add}">Add Team</a></li>
+                        <li><a href="/drivers/add">Add Driver</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div th:fragment="track-footer" class="navbar navbar-inverse navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{/tracks/view}">Tracks List</a></li>
+                        <li><a th:href="@{/tracks/add}">Add Track</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <form th:fragment="lform" id="loginform" method="post">
+            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
+        </form>
 
     </body>
 </html>

@@ -17,11 +17,15 @@
                     <td><a th:href="'/teams/view/' + ${team.id}" th:text="${team.name}"></a></td>
                 </tr>
             </table>
+            <ul>
+                <li><a href="/teams/add">Add Team</a></li>
+                <li><a href="/drivers/add">Add Driver</a></li>
+                <li><a href="/seasons/add">Add Season</a></li>
+            </ul>
         </div>
 
         <div th:replace="fragments :: team-footer"></div>
-        <form id="loginform" method="post">
-            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
-        </form>
+
+        <form th:replace="fragments :: lform"></form>
     </body>
 </html>

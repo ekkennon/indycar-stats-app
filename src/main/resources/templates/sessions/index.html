@@ -7,11 +7,16 @@
 
         <div class="container body-content">
             <h2 th:text="${title}">IndyCar Stats</h2>
+            <ul>
+                <li><a href="/sessions/list">View All Sessions</a></li>
+                <li><a href="/sessions/add">Add Session</a></li>
+                <li><a href="/races/list">View All Races</a></li>
+                <li><a href="/races/add">Add Race</a></li>
+            </ul>
         </div>
 
         <div th:replace="fragments :: session-footer"></div>
-        <form id="loginform" method="post">
-            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
-        </form>
+
+        <form th:replace="fragments :: lform"></form>
     </body>
 </html>

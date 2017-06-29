@@ -12,6 +12,11 @@
                 <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
                 <input type="submit" value="Add Season" />
             </form>
+
+            <ul>
+                <li><a href="/teams/add">Add Team</a></li>
+                <li><a href="/races/add">Add Race</a></li>
+            </ul>
         </div>
 
         <div th:replace="fragments :: season-footer"></div>

@@ -19,11 +19,16 @@
                     <td><a th:href="'/races/view/' + ${race.id}">View Sessions</a></td>
                 </tr>
             </table>
+            <ul>
+                <li><a href="/races/list">View Races</a></li>
+                <li><a href="/seasons/list">View Seasons</a></li>
+                <li><a href="/tracks/view">View Tracks</a></li>
+                <li><a href="/sessions/add">Add Session</a></li>
+            </ul>
         </div>
 
         <div th:replace="fragments :: race-footer"></div>
-        <form id="loginform" method="post">
-            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
-        </form>
+
+        <form th:replace="fragments :: lform"></form>
     </body>
 </html>

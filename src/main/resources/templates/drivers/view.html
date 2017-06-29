@@ -17,11 +17,15 @@
                     <td><a th:href="'/drivers/view/' + ${driver.id}" th:text="${driver.name}"></a></td>
                 </tr>
             </table>
+            <ul>
+                <li><a href="/drivers/add">Add Driver</a></li>
+                <li><a href="/teams/view">View Teams</a></li>
+                <li><a href="/teams/add">Add Team</a></li>
+            </ul>
         </div>
 
         <div th:replace="fragments :: driver-footer"></div>
-        <form id="loginform" method="post">
-            <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
-        </form>
+
+        <form th:replace="fragments :: lform"></form>
     </body>
 </html>
