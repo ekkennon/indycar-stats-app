@@ -16,6 +16,11 @@ public class TeamAddForm {
     @NotNull
     private int year;
 
+    @NotNull
+    private String loggedin;
+
+    private String twitterHandle;
+
     private int[] driverids;
     private Iterable<Season> seasons;
     private Iterable<Driver> drivers;
@@ -23,9 +28,10 @@ public class TeamAddForm {
     public TeamAddForm() {
     }
 
-    public TeamAddForm(Iterable<Season> seasons, Iterable<Driver> drivers) {
+    public TeamAddForm(Iterable<Season> seasons, Iterable<Driver> drivers, String loggedin) {
         this.seasons = seasons;
         this.drivers = drivers;
+        this.loggedin = loggedin;
     }
 
     public String getName() {
@@ -42,6 +48,14 @@ public class TeamAddForm {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public String getLoggedin() {
+        return loggedin;
+    }
+
+    public void setLoggedin(String loggedin) {
+        this.loggedin = loggedin;
     }
 
     public int[] getDriverids() {
@@ -66,5 +80,13 @@ public class TeamAddForm {
 
     public void setDrivers(Iterable<Driver> drivers) {
         this.drivers = drivers;
+    }
+
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
     }
 }

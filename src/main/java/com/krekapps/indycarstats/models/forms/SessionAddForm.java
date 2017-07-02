@@ -15,6 +15,9 @@ public class SessionAddForm {
     @NotNull
     private int raceid;
 
+    @NotNull
+    private String loggedin;
+
     private Iterable<Race> races;
 
     public SessionAddForm() {
@@ -23,8 +26,9 @@ public class SessionAddForm {
     public SessionAddForm(Race r) {
     }
 
-    public SessionAddForm(Iterable<Race> races) {
+    public SessionAddForm(Iterable<Race> races, String loggedin) {
         this.races = races;
+        this.loggedin = loggedin;
     }
 
     public String getName() {
@@ -41,6 +45,14 @@ public class SessionAddForm {
 
     public void setRaceid(int raceid) {
         this.raceid = raceid;
+    }
+
+    public String getLoggedin() {
+        return loggedin;
+    }
+
+    public void setLoggedin(String loggedin) {
+        this.loggedin = loggedin;
     }
 
     public Iterable<Race> getRaces() {

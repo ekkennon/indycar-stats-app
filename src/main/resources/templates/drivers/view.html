@@ -9,12 +9,8 @@
             <h2 th:text="${title}">IndyCar Stats</h2>
 
             <article>
-                <div th:unless="${drivers} and ${drivers.size()}">
-                    <h4>No Results</h4>
-                </div>
-
                 <table class="table">
-                    <tr th:each="driver : ${drivers}">
+                    <tr>
                         <td><a th:href="'/drivers/view/' + ${driver.id}" th:text="${driver.name}"></a></td>
                     </tr>
                 </table>
@@ -27,7 +23,7 @@
             </article>
 
             <nav class="navbar-right">
-                <a class="twitter-timeline" href="https://twitter.com/TwitterDev" data-tweet-limit="8">Tweets by TwitterDev</a>
+                <a class="twitter-timeline" th:href="'https://twitter.com/' + ${driver.twitterHandle}" th:text="'Tweets by ' + ${driver.name}" data-tweet-limit="8"></a>
                 <script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
             </nav>
         </div>

@@ -55,18 +55,15 @@ public class ListController {
         model.addAttribute("title", "IndyCar Drivers List");
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("drivers", driverDao.findAll());
-        return "drivers/view";
+        return "drivers/list";
     }
 
     @RequestMapping(value="drivers/view/{id}")
     private String driversViewOne(Model model, @PathVariable int id) {
         Driver driver = driverDao.findOne(id);
-        List<Driver> driverlist = new ArrayList<>();
-        driverlist.add(driver);
-        Iterable<Driver> d = driverlist;
         model.addAttribute("title", "IndyCar Driver: " + driver.getName());
         model.addAttribute("loggedin", adminSession.isSignedInString());
-        model.addAttribute("drivers", d);
+        model.addAttribute("driver", driver);
         return "drivers/view";
     }
 

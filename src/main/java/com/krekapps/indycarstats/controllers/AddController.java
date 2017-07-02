@@ -75,15 +75,12 @@ public class AddController {
     }
 
     @RequestMapping(value="drivers/add", method=RequestMethod.POST)
-    private String addDriver(Model model, @ModelAttribute @Valid Driver driver, Errors errors, @RequestParam String loggedin) {
+    private String addDriver(Model model, @RequestParam String name, @RequestParam String loggedin, @RequestParam String twitter) {
         if (!adminSession.isSignedInString().equals(loggedin)) {
             adminSession.setSignedIn(loggedin);
         }
-        if (errors.hasErrors()) {
-            model.addAttribute("title", addDriver);
-            model.addAttribute("loggedin", adminSession.isSignedInString());
-            return "drivers/add";
-        }
+        Driver driver = new Driver(name);
+        driver.setTwitterHandle(twitter);
         driverDao.save(driver);
         model.addAttribute("title", "IndyCar Stats App");
         model.addAttribute("loggedin", adminSession.isSignedInString());
@@ -99,7 +96,7 @@ public class AddController {
             return "index";
         }
 
-        RaceAddForm raceAddForm = new RaceAddForm(seasonDao.findAll(), trackDao.findAll());
+        RaceAddForm raceAddForm = new RaceAddForm(seasonDao.findAll(), trackDao.findAll(), adminSession.isSignedInString());
 
         model.addAttribute("title", addRace);
         model.addAttribute("loggedin", adminSession.isSignedInString());
@@ -174,7 +171,7 @@ public class AddController {
         }
 
         Iterable<Race> races = raceDao.findAll();
-        SessionAddForm sessionAddForm = new SessionAddForm(races);
+        SessionAddForm sessionAddForm = new SessionAddForm(races, adminSession.isSignedInString());
 
         model.addAttribute("title", addSession);
         model.addAttribute("loggedin", adminSession.isSignedInString());
@@ -354,7 +351,7 @@ public class AddController {
             return "index";
         }
 
-        TeamAddForm teamAddForm = new TeamAddForm(seasonDao.findAll(), driverDao.findAll());
+        TeamAddForm teamAddForm = new TeamAddForm(seasonDao.findAll(), driverDao.findAll(), adminSession.isSignedInString());
 
         model.addAttribute("title", addTeam);
         model.addAttribute("loggedin", adminSession.isSignedInString());
@@ -363,9 +360,9 @@ public class AddController {
     }
 
     @RequestMapping(value="teams/add", method=RequestMethod.POST)
-    private String addTeam(Model model, @ModelAttribute @Valid TeamAddForm teamAddForm, Errors errors, @RequestParam String loggedin) {
-        if (!adminSession.isSignedInString().equals(loggedin)) {
-            adminSession.setSignedIn(loggedin);
+    private String addTeam(Model model, @ModelAttribute @Valid TeamAddForm teamAddForm, Errors errors) {
+        if (!adminSession.isSignedInString().equals(teamAddForm.getLoggedin())) {
+            adminSession.setSignedIn(teamAddForm.getLoggedin());
         }
         if (errors.hasErrors()) {
             model.addAttribute("title", addTeam);
@@ -382,6 +379,7 @@ public class AddController {
         }
 
         Team team = new Team();
+        team.setTwitterHandle(teamAddForm.getTwitterHandle());
         team.setName(teamAddForm.getName());
         team.setSeason(seasonDao.findOne(teamAddForm.getYear()));
         team.setDrivers(drivers);
@@ -408,16 +406,13 @@ public class AddController {
     }
 
     @RequestMapping(value="tracks/add", method=RequestMethod.POST)
-    private String addTrack(Model model, @ModelAttribute @Valid Track track, Errors errors, @RequestParam String loggedin) {
+    private String addTrack(Model model, @RequestParam String name, @RequestParam String loggedin, @RequestParam String twitter) {
         if (!adminSession.isSignedInString().equals(loggedin)) {
             adminSession.setSignedIn(loggedin);
         }
-        if (errors.hasErrors()) {
-            model.addAttribute("title", addTrack);
-            model.addAttribute("loggedin", adminSession.isSignedInString());
-            return "tracks/add";
-        }
 
+        Track track = new Track(name);
+        track.setTwitterHandle(twitter);
         trackDao.save(track);
         model.addAttribute("title", "IndyCar Stats App");
         model.addAttribute("loggedin", adminSession.isSignedInString());

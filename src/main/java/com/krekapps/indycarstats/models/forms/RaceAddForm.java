@@ -20,15 +20,19 @@ public class RaceAddForm {
     @NotNull
     private int trackid;
 
+    @NotNull
+    private String loggedin;
+
     private Iterable<Season> seasons;
     private Iterable<Track> tracks;
 
     public RaceAddForm() {
     }
 
-    public RaceAddForm(Iterable<Season> seasons, Iterable<Track> tracks) {
+    public RaceAddForm(Iterable<Season> seasons, Iterable<Track> tracks, String loggedin) {
         this.seasons = seasons;
         this.tracks = tracks;
+        this.loggedin = loggedin;
     }
 
     public String getName() {
@@ -53,6 +57,14 @@ public class RaceAddForm {
 
     public void setTrackid(int trackid) {
         this.trackid = trackid;
+    }
+
+    public String getLoggedin() {
+        return loggedin;
+    }
+
+    public void setLoggedin(String loggedin) {
+        this.loggedin = loggedin;
     }
 
     public Iterable<Season> getSeasons() {
