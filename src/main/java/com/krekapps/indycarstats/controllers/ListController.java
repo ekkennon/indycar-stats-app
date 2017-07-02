@@ -50,7 +50,7 @@ public class ListController {
     @Autowired
     private TrackDao trackDao;
 
-    @RequestMapping(value="drivers/view")
+    @RequestMapping(value="drivers/list")
     private String driversViewAll(Model model) {
         model.addAttribute("title", "IndyCar Drivers List");
         model.addAttribute("loggedin", adminSession.isSignedInString());

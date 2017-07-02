@@ -19,6 +19,8 @@ public class Driver {
     @NotNull
     private String name;
 
+    private String twitterHandle;
+
     @ManyToMany(mappedBy = "drivers")
     private List<Team> teams;
 
@@ -95,5 +97,13 @@ public class Driver {
 
     public void setTimeStats(List<TimeStat> timeStats) {
         this.timeStats = timeStats;
+    }
+
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
     }
 }

@@ -19,6 +19,8 @@ public class Team {
     @NotNull
     private String name;
 
+    private String twitterHandle;
+
     @NotNull
     @ManyToOne
     private Season season;
@@ -59,5 +61,13 @@ public class Team {
 
     public void setDrivers(List<Driver> drivers) {
         this.drivers = drivers;
+    }
+
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
     }
 }

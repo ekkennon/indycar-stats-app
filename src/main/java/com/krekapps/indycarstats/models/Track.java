@@ -15,6 +15,8 @@ public class Track {
     @GeneratedValue
     private int id;
 
+    private String twitterHandle;
+
     @NotNull
     private String name;
 
@@ -46,5 +48,13 @@ public class Track {
 
     public void setRaces(List<Race> races) {
         this.races = races;
+    }
+
+    public String getTwitterHandle() {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle) {
+        this.twitterHandle = twitterHandle;
     }
 }
