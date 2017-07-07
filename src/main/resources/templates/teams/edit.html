@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+
+<div th:replace="fragments :: page-header"></div>
+
+<div class="container body-content">
+    <h2 th:text="${title}">IndyCar Stats</h2>
+
+    <form method="post" class="add-form" th:object="${form}">
+        <div class="form-group">
+            <input placeholder="Name" type="text" name="name" th:value="*{name}" />
+            <span th:errors="*{name}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label th:for="year">Seasons</label>
+            <select name="year">
+                <option th:each="season : *{seasons}"
+                        th:text="${season.year}"
+                        th:value="${season.year}"></option>
+            </select>
+            <span th:errors="*{year}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Drivers:</label>
+            <div th:each="driver : *{drivers}" class="checkbox">
+                <input type="checkbox" name="driverids" th:value="${driver.id}" th:id="${driver.id}"/>
+                <label th:for="*{driverids}" th:text="${driver.name}"></label>
+                <br />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input placeholder="Twitter Handle" class="form-control" name="twitter" id="twitter" required="required"/>
+        </div>
+
+        <input type="hidden" name="loggedin" id="loggedin_e" th:value="*{loggedin}" />
+
+        <input type="submit" value="Edit Team" />
+    </form>
+
+    <form method="post" action="'/teams/remove/' + ${team.id}" class="add-form">
+        <input type="text" name="loggedin" id="loggedin_r" th:value="*{loggedin}" />
+        <input type="submit" value="Remove Team" />
+    </form>
+
+    <ul>
+        <li><a href="/teams/view">View Teams</a></li>
+        <li><a href="/seasons/add">Add Season</a></li>
+        <li><a href="/drivers/add">Add Driver</a></li>
+    </ul>
+</div>
+
+<div th:replace="fragments :: race-footer"></div>
+
+</body>
+</html>
