@@ -10,39 +10,31 @@
 
             <form method="post" class="add-form" th:object="${form}">
                 <div class="form-group">
-                    <input placeholder="Name" type="text" name="name" th:value="*{name}" />
+                    <input placeholder="Name" class="form-control" th:field="*{name}" required="required"/>
                     <span th:errors="*{name}" class="error"></span>
                 </div>
 
                 <div class="form-group">
                     <label th:for="year">Seasons</label>
-                    <select name="year">
-                        <option th:each="season : *{seasons}"
-                                th:text="${season.year}"
-                                th:value="${season.year}"></option>
+                    <select th:field="*{year}">
+                        <option th:each="season : *{seasons}" th:text="${season.year}" th:value="${season.year}"></option>
                     </select>
                     <span th:errors="*{year}" class="error"></span>
                 </div>
 
                 <div class="form-group">
                     <label th:for="trackid">Tracks</label>
-                    <select name="trackid">
-                        <option th:each="track : *{tracks}"
-                                th:text="${track.name}"
-                                th:value="${track.id}"></option>
+                    <select th:field="*{trackid}">
+                        <option th:each="track : *{tracks}" th:text="${track.name}" th:value="${track.id}"></option>
                     </select>
                     <span th:errors="*{trackid}" class="error"></span>
                 </div>
 
-                <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
+                <input type="hidden" th:field="*{loggedin}" />
 
                 <input type="submit" value="Add Race" />
             </form>
-            <ul>
-                <li><a href="/seasons/list">View Seasons</a></li>
-                <li><a href="/tracks/list">View Tracks</a></li>
-                <li><a href="/sessions/add">Add Session</a></li>
-            </ul>
+
         </div>
 
         <div th:replace="fragments :: race-footer"></div>

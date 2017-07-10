@@ -7,6 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
 
 /**
@@ -35,9 +40,15 @@ public class SeasonController {
 
     @RequestMapping(value="list")
     private String viewAll(Model model) {
+        List<Season> seasonList = new ArrayList<>();
+        for (Season s : seasonDao.findAll()) {
+            seasonList.add(s);
+        }
+
+        Collections.reverse(seasonList);
         model.addAttribute("title", listTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
-        model.addAttribute("seasons", seasonDao.findAll());
+        model.addAttribute("seasons", seasonList);
         return "seasons/list";
     }
 

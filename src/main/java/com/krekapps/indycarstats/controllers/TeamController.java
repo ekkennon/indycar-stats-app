@@ -54,6 +54,14 @@ public class TeamController {
         return "teams/list";
     }
 
+    @RequestMapping(value="list/{year}")
+    private String viewBySeason(Model model, @PathVariable int year) {
+        model.addAttribute("title", listTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
+        model.addAttribute("teams", teamDao.findBySeason(seasonDao.findOne(year)));
+        return "teams/list";
+    }
+
     @RequestMapping(value="view/{id}")
     private String viewById(Model model, @PathVariable int id) {
         Team team = teamDao.findOne(id);

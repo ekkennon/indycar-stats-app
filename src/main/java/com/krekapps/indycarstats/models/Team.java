@@ -26,7 +26,7 @@ public class Team {
     private Season season;
 
     @ManyToMany
-    private List<Driver> drivers;//TODO should this be not null?
+    private List<Driver> drivers;
 
     public Team() {
     }

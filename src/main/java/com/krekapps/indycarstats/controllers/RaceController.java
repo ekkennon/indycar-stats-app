@@ -58,6 +58,14 @@ public class RaceController {
         return "races/list";
     }
 
+    @RequestMapping(value="list/{year}")
+    private String viewBySeason(Model model, @PathVariable int year) {
+        model.addAttribute("title", listTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
+        model.addAttribute("races", raceDao.findBySeason(seasonDao.findOne(year)));
+        return "races/list";
+    }
+
     @RequestMapping(value="view/{id}")
     private String viewById(Model model, @PathVariable int id) {
         Race race = raceDao.findOne(id);
@@ -78,9 +86,9 @@ public class RaceController {
         }
 
         RaceForm raceForm = new RaceForm(seasonDao.findAll(), trackDao.findAll(), adminSession.isSignedInString());
+        raceForm.setLoggedin(adminSession.isSignedInString());
 
         model.addAttribute("title", addTitle);
-        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("form", raceForm);
         return "races/add";
     }
@@ -92,7 +100,6 @@ public class RaceController {
         }
         if (errors.hasErrors()) {
             model.addAttribute("title", addTitle);
-            model.addAttribute("loggedin", adminSession.isSignedInString());
             model.addAttribute("form", raceForm);
             return "races/add";
         }
@@ -122,6 +129,7 @@ public class RaceController {
         raceForm.setYear(race.getSeason().getYear());
         raceForm.setTrackid(race.getTrack().getId());
         raceForm.setLoggedin(adminSession.isSignedInString());
+        raceForm.setId(race.getId());
 
         model.addAttribute("title", editTitle + race.getName());
         model.addAttribute("form", raceForm);
@@ -130,22 +138,21 @@ public class RaceController {
     }
 
     @RequestMapping(value="edit/**", method=RequestMethod.POST)
-    private String edit(Model model, @ModelAttribute @Valid RaceForm raceForm, Errors errors) {
-        if (!adminSession.isSignedInString().equals(raceForm.getLoggedin())) {
-            adminSession.setSignedIn(raceForm.getLoggedin());
+    private String edit(Model model, @ModelAttribute @Valid RaceForm form, Errors errors) {
+        if (!adminSession.isSignedInString().equals(form.getLoggedin())) {
+            adminSession.setSignedIn(form.getLoggedin());
         }
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", editTitle + raceForm.getName());
-            model.addAttribute("loggedin", adminSession.isSignedInString());
-            model.addAttribute("form", raceForm);
-            return "races/edit/" + raceForm.getId();
+            model.addAttribute("title", editTitle + form.getName());
+            model.addAttribute("form", form);
+            return "races/edit";
         }
 
-        Race race = raceDao.findOne(raceForm.getId());
-        race.setName(raceForm.getName());
-        race.setSeason(seasonDao.findOne(raceForm.getYear()));
-        race.setTrack(trackDao.findOne(raceForm.getTrackid()));
+        Race race = raceDao.findOne(form.getId());
+        race.setName(form.getName());
+        race.setSeason(seasonDao.findOne(form.getYear()));
+        race.setTrack(trackDao.findOne(form.getTrackid()));
 
         raceDao.save(race);
         model.addAttribute("title", listTitle);

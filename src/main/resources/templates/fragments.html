@@ -24,8 +24,9 @@
             <div class="container">
                 <div class="navbar-header">
                     <a th:href="@{/}" class="navbar-brand">Home</a>
-                    <a th:href="@{/view}" class="navbar-brand">View Data</a>
-                    <a th:href="@{/add}" class="navbar-brand">Add Data</a>
+                    <a th:href="@{/seasons/list}" class="navbar-brand">View Seasons</a>
+                    <a th:href="@{/drivers/list}" class="navbar-brand">View Drivers</a>
+                    <a th:href="@{/tracks/list}" class="navbar-brand">View Tracks</a>
                     <a th:href="@{/login}" class="navbar-brand">Admin</a>
                 </div>
             </div>
@@ -48,11 +49,13 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a th:href="@{/races/list}">View Races</a></li>
-                        <li><a th:href="@{/races/add}">Add Races</a></li>
+                        <li><a th:href="@{/races/add}">Add Race</a></li>
                         <li><a th:href="@{/seasons/list}">View Seasons</a></li>
+                        <li><a th:href="@{/seasons/add}">Add Season</a></li>
                         <li><a th:href="@{/tracks/list}">View Tracks</a></li>
+                        <li><a th:href="@{/tracks/add}">Add Track</a></li>
                         <li><a th:href="@{/sessions/list}">View Sessions</a></li>
-                        <li><a th:href="@{/sessions/add}">Add Sessions</a></li>
+                        <li><a th:href="@{/sessions/add}">Add Session</a></li>
                     </ul>
                 </div>
             </div>
@@ -102,7 +105,10 @@
                     <ul class="nav navbar-nav">
                         <li><a th:href="@{/teams/list}">View Teams</a></li>
                         <li><a th:href="@{/teams/add}">Add Team</a></li>
+                        <li><a href="/drivers/list">View Drivers</a></li>
                         <li><a href="/drivers/add">Add Driver</a></li>
+                        <li><a href="/seasons/list">View Seasons</a></li>
+                        <li><a href="/seasons/add">Add Season</a></li>
                     </ul>
                 </div>
             </div>

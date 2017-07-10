@@ -16,16 +16,14 @@
 
                 <div class="form-group">
                     <label th:for="raceid">Races</label>
-                    <select name="raceid">
-                        <option th:each="race : *{races}"
-                                th:text="${race.name}"
-                                th:value="${race.id}"></option>
+                    <select th:field="*{raceid}">
+                        <option th:each="race : *{races}" th:text="${race.name}" th:value="${race.id}"></option>
                     </select>
                     <span th:errors="*{raceid}" class="error"></span>
                 </div>
 
                 <!--<input type="hidden" name="raceid" th:value="race.id" />-->
-                <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
+                <input type="hidden" th:field="*{loggedin}" />
 
                 <input type="submit" value="Add Session" />
             </form>

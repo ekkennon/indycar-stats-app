@@ -28,8 +28,10 @@
             </table>
             <ul>
                 <li><a th:href="'/seasons/edit/' + ${season.year}">Edit Season</a></li>
-                <li><a href="/teams/add">Add Teams</a></li>
-                <li><a href="/races/add">Add Races</a></li>
+                <li><a href="/teams/add">Add Team</a></li>
+                <li><a href="/races/add">Add Race</a></li>
+                <li><a th:href="'/teams/list/' + ${season.year}">View Teams By Season</a></li>
+                <li><a th:href="'/races/list/' + ${season.year}">View Races By Season</a></li>
                 <li><a href="/seasons/list">View Seasons</a></li>
             </ul>
         </div>

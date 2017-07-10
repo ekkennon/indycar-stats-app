@@ -71,9 +71,9 @@ public class SessionController {
         }
 
         SessionForm sessionForm = new SessionForm(raceDao.findAll(), adminSession.isSignedInString());
+        sessionForm.setLoggedin(adminSession.isSignedInString());
 
         model.addAttribute("title", addTitle);
-        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("form", sessionForm);
         return "sessions/add";
     }
@@ -88,9 +88,9 @@ public class SessionController {
 
         Race race = raceDao.findOne(id);
         SessionForm sessionForm = new SessionForm(race);
+        sessionForm.setLoggedin(adminSession.isSignedInString());
 
         model.addAttribute("title", addTitle);
-        model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("form", sessionForm);
         return "sessions/add";
     }
@@ -102,9 +102,8 @@ public class SessionController {
         }
         if (errors.hasErrors()) {
             model.addAttribute("title", addTitle);
-            model.addAttribute("loggedin", adminSession.isSignedInString());
             model.addAttribute("form", sessionForm);
-            return "sessions/add/" + sessionForm.getRaceid();
+            return "sessions/add";
         }
 
         Session session = new Session();
@@ -147,9 +146,8 @@ public class SessionController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", editTitle + sessionForm.getName());
-            model.addAttribute("loggedin", adminSession.isSignedInString());
             model.addAttribute("form", sessionForm);
-            return "sessions/edit/" + sessionForm.getId();
+            return "sessions/edit";
         }
 
         Session session = sessionDao.findOne(sessionForm.getId());

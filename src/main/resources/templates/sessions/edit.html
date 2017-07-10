@@ -15,12 +15,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label th:for="races">Races</label>
-                    <select name="races">
+                    <label th:for="raceid">Races</label>
+                    <select th:field="*{raceid}">
                         <option th:each="race : *{races}" th:selected="${race.id} == *{raceid}"
                                 th:text="${race.name}" th:value="${race.id}"></option>
                     </select>
-                    <span th:errors="*{races}" class="error"></span>
+                    <span th:errors="*{raceid}" class="error"></span>
                 </div>
 
                 <input type="hidden" th:field="*{loggedin}" />
