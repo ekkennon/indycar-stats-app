@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body>
+    <head th:replace="fragments :: head"></head>
+    <body>
 
-<div th:replace="fragments :: page-header"></div>
+        <div th:replace="fragments :: page-header"></div>
 
-<div class="container body-content">
-    <h2 th:text="${title}">IndyCar Stats</h2>
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
 
-    <table class="table">
-        <tr>
-            <td><a th:href="'/seasons/view/' + ${race.season.year}" th:text="${race.season.year}"></a></td>
-            <td><a th:href="'/tracks/view/' + ${race.track.id}" th:text="${race.track.name}"></a></td>
-            <td><a th:href="'/races/view/' + ${race.id}">View Sessions</a></td>
-        </tr>
-    </table>
-    <ul>
-        <li><a href="/races/list">View Races</a></li>
-        <li><a href="/seasons/list">View Seasons</a></li>
-        <li><a href="/tracks/view">View Tracks</a></li>
-        <li><a href="/sessions/add">Add Session</a></li>
-    </ul>
-</div>
+            <table class="table">
+                <tr>
+                    <td><a th:href="'/seasons/view/' + ${race.season.year}" th:text="${race.season.year}"></a></td>
+                    <td><a th:href="'/tracks/view/' + ${race.track.id}" th:text="${race.track.name}"></a></td>
+                    <td><a th:href="'/races/view/' + ${race.id}">View Sessions</a></td>
+                </tr>
+            </table>
+            <table class="table">
+                <tr th:each="session : ${sessions}">
+                    <td><a th:href="'/sessions/view/' + ${session.id}" th:text="${session.name}"></a></td>
+                </tr>
+            </table>
+            <ul>
+                <li><a th:href="'/races/edit/' + ${race.id}">Edit Race</a></li>
+                <li><a href="/races/list">View Races</a></li>
+                <li><a href="/seasons/list">View Seasons</a></li>
+                <li><a href="/tracks/list">View Tracks</a></li>
+                <li><a href="/sessions/add">Add Session</a></li>
+            </ul>
+        </div>
 
-<div th:replace="fragments :: race-footer"></div>
+        <div th:replace="fragments :: race-footer"></div>
 
-<form th:replace="fragments :: lform"></form>
-</body>
+        <form th:replace="fragments :: lform"></form>
+    </body>
 </html>

@@ -2,7 +2,8 @@ package com.krekapps.indycarstats.controllers;
 
 import com.krekapps.indycarstats.models.*;
 import com.krekapps.indycarstats.models.data.*;
-import com.krekapps.indycarstats.models.forms.TeamAddForm;
+import com.krekapps.indycarstats.models.forms.DriverInTeam;
+import com.krekapps.indycarstats.models.forms.TeamForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +21,14 @@ import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
  */
 
 @Controller
+@RequestMapping(value="teams")
 public class TeamController {
-    private final String addTeam = "Add IndyCar Team:";
+    private final String addTitle = "Add IndyCar Team:";
+    private final String indexTitle = "IndyCar Teams";
+    private final String listTitle = indexTitle + " List";
+    private final String singleTitle = "IndyCar Team: ";
+    private final String noPrivilageTitle = "Unable to Add/Edit Teams without Admin Privilage.";
+    private final String editTitle = "Edit " + singleTitle;
 
     @Autowired
     private DriverDao driverDao;
@@ -32,78 +39,152 @@ public class TeamController {
     @Autowired
     private TeamDao teamDao;
 
-    @RequestMapping(value="teams")
-    public String teamIndex(Model model) {
-        model.addAttribute("title", "IndyCar Teams");
+    @RequestMapping(value="")
+    public String index(Model model) {
+        model.addAttribute("title", indexTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         return "teams/index";
     }
 
-    @RequestMapping(value="teams/list")
-    private String teamsViewAll(Model model) {
-        model.addAttribute("title", "IndyCar Teams List");
+    @RequestMapping(value="list")
+    private String viewAll(Model model) {
+        model.addAttribute("title", listTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("teams", teamDao.findAll());
         return "teams/list";
     }
 
-    @RequestMapping(value="teams/view/{id}")
-    private String teamsViewOne(Model model, @PathVariable int id) {
+    @RequestMapping(value="view/{id}")
+    private String viewById(Model model, @PathVariable int id) {
         Team team = teamDao.findOne(id);
-        List<Team> teamlist = new ArrayList<>();
-        teamlist.add(team);
-        Iterable<Team> t = teamlist;
-        model.addAttribute("title", "IndyCar Team: " + team.getName());
+        model.addAttribute("title", singleTitle + team.getName());
         model.addAttribute("loggedin", adminSession.isSignedInString());
-        model.addAttribute("teams", t);
+        model.addAttribute("team", team);
         return "teams/view";
     }
 
-    @RequestMapping(value="teams/add", method=RequestMethod.GET)
-    private String addTeam(Model model) {
+    @RequestMapping(value="add", method=RequestMethod.GET)
+    private String add(Model model) {
         if (!adminSession.isSignedIn()) {
-            model.addAttribute("title", "Unable to add Teams without Admin privilage.");
+            model.addAttribute("title", noPrivilageTitle);
             model.addAttribute("loggedin", adminSession.isSignedInString());
-            return "index";
+            return "teams/index";
         }
 
-        TeamAddForm teamAddForm = new TeamAddForm(seasonDao.findAll(), driverDao.findAll(), adminSession.isSignedInString());
+        TeamForm teamForm = new TeamForm(seasonDao.findAll(), driverDao.findAll(), adminSession.isSignedInString());
 
-        model.addAttribute("title", addTeam);
+        model.addAttribute("title", addTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
-        model.addAttribute("form", teamAddForm);
+        model.addAttribute("form", teamForm);
         return "teams/add";
     }
 
-    @RequestMapping(value="teams/add", method=RequestMethod.POST)
-    private String addTeam(Model model, @ModelAttribute @Valid TeamAddForm teamAddForm, Errors errors) {
-        if (!adminSession.isSignedInString().equals(teamAddForm.getLoggedin())) {
-            adminSession.setSignedIn(teamAddForm.getLoggedin());
+    @RequestMapping(value="add", method=RequestMethod.POST)
+    private String add(Model model, @ModelAttribute @Valid TeamForm teamForm, Errors errors) {
+        if (!adminSession.isSignedInString().equals(teamForm.getLoggedin())) {
+            adminSession.setSignedIn(teamForm.getLoggedin());
         }
         if (errors.hasErrors()) {
-            model.addAttribute("title", addTeam);
+            model.addAttribute("title", addTitle);
             model.addAttribute("loggedin", adminSession.isSignedInString());
-            model.addAttribute("form", teamAddForm);
+            model.addAttribute("form", teamForm);
             return "teams/add";
         }
 
         List<Driver> drivers = new ArrayList<>();
-        int[] driverids = teamAddForm.getDriverids();
+        int[] driverids = teamForm.getDriverids();
 
         for (int id : driverids) {
             drivers.add(driverDao.findOne(id));
         }
 
         Team team = new Team();
-        team.setTwitterHandle(teamAddForm.getTwitterHandle());
-        team.setName(teamAddForm.getName());
-        team.setSeason(seasonDao.findOne(teamAddForm.getYear()));
+        team.setTwitterHandle(teamForm.getTwitterHandle());
+        team.setName(teamForm.getName());
+        team.setSeason(seasonDao.findOne(teamForm.getYear()));
         team.setDrivers(drivers);
 
         teamDao.save(team);
-        model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("title", listTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("teams", teamDao.findAll());
-        return "redirect:";
+        return "teams/list";
+    }
+
+    @RequestMapping(value="edit/{id}", method=RequestMethod.GET)
+    private String edit(Model model, @PathVariable int id) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", noPrivilageTitle);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "teams/index";
+        }
+
+        Team team = teamDao.findOne(id);
+
+        TeamForm teamForm = new TeamForm(seasonDao.findAll(), driverDao.findAll(), adminSession.isSignedInString());
+        teamForm.setName(team.getName());
+        teamForm.setYear(team.getSeason().getYear());
+        teamForm.setTwitterHandle(team.getTwitterHandle());
+        teamForm.setId(id);
+        teamForm.setLoggedin(adminSession.isSignedInString());
+
+        List<DriverInTeam> drivers = new ArrayList<>();
+        for (Driver d : driverDao.findAll()) {
+            DriverInTeam driver = new DriverInTeam(d.getId(),d.getName(), team.getDrivers().contains(d));
+            drivers.add(driver);
+        }
+
+        model.addAttribute("title", editTitle + team.getName());
+        model.addAttribute("form", teamForm);
+        model.addAttribute("driversInTeam", drivers);
+
+        return "teams/edit";
+    }
+
+    @RequestMapping(value="edit/**", method=RequestMethod.POST)
+    private String edit(Model model, @ModelAttribute @Valid TeamForm teamForm, Errors errors) {
+        if (!adminSession.isSignedInString().equals(teamForm.getLoggedin())) {
+            adminSession.setSignedIn(teamForm.getLoggedin());
+        }
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", editTitle + teamForm.getName());
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            model.addAttribute("form", teamForm);
+            return "teams/edit/" + teamForm.getId();
+        }
+
+        List<Driver> drivers = new ArrayList<>();
+        int[] driverids = teamForm.getDriverids();
+
+        for (int id : driverids) {
+            drivers.add(driverDao.findOne(id));
+        }
+
+        Team team = teamDao.findOne(teamForm.getId());
+        team.setTwitterHandle(teamForm.getTwitterHandle());
+        team.setName(teamForm.getName());
+        team.setSeason(seasonDao.findOne(teamForm.getYear()));
+        team.setDrivers(drivers);
+
+        teamDao.save(team);
+        model.addAttribute("title", listTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
+        model.addAttribute("teams", teamDao.findAll());
+        return "teams/list";
+    }
+
+    @RequestMapping(value="remove/{id}")
+    private String remove(Model model, @PathVariable int id, @RequestParam String loggedin) {
+        if (!adminSession.isSignedInString().equals(loggedin)) {
+            adminSession.setSignedIn(loggedin);
+        }
+
+        teamDao.delete(id);
+
+        model.addAttribute("title", listTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
+        model.addAttribute("teams", teamDao.findAll());
+        return "teams/list";
     }
 }

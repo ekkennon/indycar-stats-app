@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by ekk on 27-Jun-17.
  */
-public class RaceAddForm {
+public class RaceForm {
 
     @NotNull
     private String name;
@@ -23,16 +23,25 @@ public class RaceAddForm {
     @NotNull
     private String loggedin;
 
+    private int id;
     private Iterable<Season> seasons;
     private Iterable<Track> tracks;
 
-    public RaceAddForm() {
+    public RaceForm() {
     }
 
-    public RaceAddForm(Iterable<Season> seasons, Iterable<Track> tracks, String loggedin) {
+    public RaceForm(Iterable<Season> seasons, Iterable<Track> tracks, String loggedin) {
         this.seasons = seasons;
         this.tracks = tracks;
         this.loggedin = loggedin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -2,11 +2,14 @@ package com.krekapps.indycarstats.controllers;
 
 import com.krekapps.indycarstats.models.Track;
 import com.krekapps.indycarstats.models.data.TrackDao;
+import com.krekapps.indycarstats.models.forms.GeneralForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,65 +20,135 @@ import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
  */
 
 @Controller
+@RequestMapping(value="tracks")
 public class TrackController {
-    private final String addTrack = "Add IndyCar Track:";
+    private final String addTitle = "Add IndyCar Track:";
+    private final String indexTitle = "IndyCar Tracks";
+    private final String listTitle = "IndyCar Tracks List";
+    private final String singleTitle = "IndyCar Track: ";
+    private final String noPrivilageTitle = "Unable to add Tracks without Admin privilage.";
+    private final String editTitle = "Edit " + singleTitle;
 
     @Autowired
     private TrackDao trackDao;
 
-    @RequestMapping(value="tracks")
-    public String trackIndex(Model model) {
-        model.addAttribute("title", "IndyCar Tracks");
+    @RequestMapping(value="")
+    public String index(Model model) {
+        model.addAttribute("title", indexTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         return "tracks/index";
     }
 
-    @RequestMapping(value="tracks/list")
-    private String tracksViewAll(Model model) {
-        model.addAttribute("title", "IndyCar Tracks List");
+    @RequestMapping(value="list")
+    private String viewAll(Model model) {
+        model.addAttribute("title", listTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("tracks", trackDao.findAll());
         return "tracks/list";
     }
 
-    @RequestMapping(value="tracks/view/{id}")
-    private String tracksViewOne(Model model, @PathVariable int id) {
+    @RequestMapping(value="view/{id}")
+    private String viewById(Model model, @PathVariable int id) {
         Track track = trackDao.findOne(id);
-        List<Track> tracklist = new ArrayList<>();
-        tracklist.add(track);
-        Iterable<Track> t = tracklist;
-        model.addAttribute("title", "IndyCar Track: " + track.getName());
+        model.addAttribute("title", singleTitle + track.getName());
         model.addAttribute("loggedin", adminSession.isSignedInString());
-        model.addAttribute("tracks", t);
+        model.addAttribute("track", track);
         return "tracks/view";
     }
 
-    @RequestMapping(value="tracks/add", method=RequestMethod.GET)
-    private String addTrack(Model model) {
+    @RequestMapping(value="add", method=RequestMethod.GET)
+    private String add(Model model) {
         if (!adminSession.isSignedIn()) {
-            model.addAttribute("title", "Unable to add Tracks without Admin privilage.");
+            model.addAttribute("title", noPrivilageTitle);
             model.addAttribute("loggedin", adminSession.isSignedInString());
-            return "index";
+            return "tracks/index";
         }
 
-        model.addAttribute("title", addTrack);
+        model.addAttribute("title", addTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute(new Track());
         return "tracks/add";
     }
 
-    @RequestMapping(value="tracks/add", method=RequestMethod.POST)
-    private String addTrack(Model model, @RequestParam String name, @RequestParam String loggedin, @RequestParam String twitter) {
+    @RequestMapping(value="add", method=RequestMethod.POST)
+    private String add(Model model, @ModelAttribute @Valid GeneralForm generalForm, Errors errors) {
+        if (!adminSession.isSignedInString().equals(generalForm.getLoggedin())) {
+            adminSession.setSignedIn(generalForm.getLoggedin());
+        }
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", addTitle);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            model.addAttribute("form", generalForm);
+            return "tracks/edit/" + generalForm.getId();
+        }
+
+        Track track = new Track(generalForm.getName());
+        track.setTwitterHandle(generalForm.getTwitterHandle());
+        trackDao.save(track);
+
+        model.addAttribute("title", listTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
+        model.addAttribute("tracks", trackDao.findAll());
+        return "tracks/list";
+    }
+
+    @RequestMapping(value="edit/{id}", method=RequestMethod.GET)
+    private String edit(Model model, @PathVariable int id) {
+        if (!adminSession.isSignedIn()) {
+            model.addAttribute("title", noPrivilageTitle);
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            return "tracks/index";
+        }
+
+        Track track = trackDao.findOne(id);
+        GeneralForm generalForm = new GeneralForm();
+        generalForm.setId(id);
+        generalForm.setLoggedin(adminSession.isSignedInString());
+        generalForm.setName(track.getName());
+        generalForm.setTwitterHandle(track.getTwitterHandle());
+
+        model.addAttribute("form", generalForm);
+        return "tracks/edit";
+    }
+
+    @RequestMapping(value="edit/**", method=RequestMethod.POST)
+    private String edit(Model model, @ModelAttribute @Valid GeneralForm generalForm, Errors errors) {
+        if (!adminSession.isSignedInString().equals(generalForm.getLoggedin())) {
+            adminSession.setSignedIn(generalForm.getLoggedin());
+        }
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", editTitle + generalForm.getName());
+            model.addAttribute("loggedin", adminSession.isSignedInString());
+            model.addAttribute("form", generalForm);
+            return "tracks/edit/" + generalForm.getId();
+        }
+
+        Track track = trackDao.findOne(generalForm.getId());
+        track.setName(generalForm.getName());
+        track.setTwitterHandle(generalForm.getTwitterHandle());
+        trackDao.save(track);
+
+        model.addAttribute("title", listTitle);
+        model.addAttribute("loggedin", adminSession.isSignedInString());
+        model.addAttribute("tracks", trackDao.findAll());
+
+        return "tracks/list";
+    }
+
+    @RequestMapping(value="remove/{id}")
+    private String remove(Model model, @PathVariable int id, @RequestParam String loggedin) {
         if (!adminSession.isSignedInString().equals(loggedin)) {
             adminSession.setSignedIn(loggedin);
         }
 
-        Track track = new Track(name);
-        track.setTwitterHandle(twitter);
-        trackDao.save(track);
-        model.addAttribute("title", "IndyCar Stats App");
+        trackDao.delete(id);
+
+        model.addAttribute("title", listTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("tracks", trackDao.findAll());
-        return "tracks/view";
+
+        return "tracks/list";
     }
 }

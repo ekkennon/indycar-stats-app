@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label th:for="year">Seasons</label>
+                    <label th:for="year">Season</label>
                     <select name="year">
                         <option th:each="season : *{seasons}"
                                 th:text="${season.year}"
@@ -42,7 +42,7 @@
                 <input type="submit" value="Add Team" />
             </form>
             <ul>
-                <li><a href="/teams/view">View Teams</a></li>
+                <li><a href="/teams/list">View Teams</a></li>
                 <li><a href="/seasons/add">Add Season</a></li>
                 <li><a href="/drivers/add">Add Driver</a></li>
             </ul>

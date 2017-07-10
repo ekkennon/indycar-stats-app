@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by ekk on 27-Jun-17.
  */
-public class SessionAddForm {
+public class SessionForm {
 
     @NotNull
     private String name;
@@ -18,17 +18,26 @@ public class SessionAddForm {
     @NotNull
     private String loggedin;
 
+    private int id;
     private Iterable<Race> races;
 
-    public SessionAddForm() {
+    public SessionForm() {
     }
 
-    public SessionAddForm(Race r) {
+    public SessionForm(Race r) {
     }
 
-    public SessionAddForm(Iterable<Race> races, String loggedin) {
+    public SessionForm(Iterable<Race> races, String loggedin) {
         this.races = races;
         this.loggedin = loggedin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

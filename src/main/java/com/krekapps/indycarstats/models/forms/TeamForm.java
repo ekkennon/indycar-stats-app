@@ -4,11 +4,13 @@ import com.krekapps.indycarstats.models.Driver;
 import com.krekapps.indycarstats.models.Season;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ekk on 27-Jun-17.
  */
-public class TeamAddForm {
+public class TeamForm {
 
     @NotNull
     private String name;
@@ -20,18 +22,26 @@ public class TeamAddForm {
     private String loggedin;
 
     private String twitterHandle;
-
+    private int id;
     private int[] driverids;
     private Iterable<Season> seasons;
     private Iterable<Driver> drivers;
 
-    public TeamAddForm() {
+    public TeamForm() {
     }
 
-    public TeamAddForm(Iterable<Season> seasons, Iterable<Driver> drivers, String loggedin) {
+    public TeamForm(Iterable<Season> seasons, Iterable<Driver> drivers, String loggedin) {
         this.seasons = seasons;
         this.drivers = drivers;
         this.loggedin = loggedin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
