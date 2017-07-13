@@ -15,13 +15,18 @@ public class Track {
     @GeneratedValue
     private int id;
 
-    private String twitterHandle;
-
     @NotNull
     private String name;
 
     @OneToMany
+    @JoinColumn(name="track_id")
     private List<Race> races;
+/*
+    @ManyToOne
+    private TrackType type;*/
+
+    private String twitterHandle;
+    private String location;
 
     public Track() {
     }
@@ -60,5 +65,21 @@ public class Track {
 
     public void setTwitterHandle(String twitterHandle) {
         this.twitterHandle = twitterHandle;
+    }
+/*
+    public TrackType getType() {
+        return type;
+    }
+
+    public void setType(TrackType type) {
+        this.type = type;
+    }*/
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
