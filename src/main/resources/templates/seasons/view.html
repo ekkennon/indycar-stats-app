@@ -18,12 +18,12 @@
 
             <table class="table">
                 <tr th:each="race : ${season.races}">
-                    <td><a th:href="'/races/view/' + ${race.id}" th:text="${race.track.name}"></a></td>
+                    <td><a th:href="'/races/view/' + ${race.id}" th:text="${race.name} + ' at ' + ${race.track.name}"></a></td>
                 </tr>
             </table>
             <table class="table">
                 <tr th:each="team : ${season.teams}">
-                    <td><a th:href="'/teams/view/' + ${team.id}" th:text="${team.name}"></a></td>
+                    <td><a th:href="'/teams/view/' + ${team.id}" th:text="${team.name} + ' ' + ${team.drivers.size()} + ' drivers'"></a></td>
                 </tr>
             </table>
             <ul>

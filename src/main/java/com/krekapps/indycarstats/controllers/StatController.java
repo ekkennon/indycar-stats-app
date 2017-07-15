@@ -1,13 +1,11 @@
 package com.krekapps.indycarstats.controllers;
 
-import com.krekapps.indycarstats.models.DecimalStat;
-import com.krekapps.indycarstats.models.IntStat;
-import com.krekapps.indycarstats.models.StringStat;
-import com.krekapps.indycarstats.models.TimeStat;
+import com.krekapps.indycarstats.models.*;
 import com.krekapps.indycarstats.models.data.DecimalStatDao;
 import com.krekapps.indycarstats.models.data.IntStatDao;
 import com.krekapps.indycarstats.models.data.StringStatDao;
 import com.krekapps.indycarstats.models.data.TimeStatDao;
+import com.krekapps.indycarstats.models.forms.AddDataForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -128,6 +126,23 @@ public class StatController {
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("stats", s);
         return "stats/view";
+    }
+
+    @RequestMapping(value="add", method=RequestMethod.GET)
+    private String add(Model model, @ModelAttribute @Valid AddDataForm form, Errors errors) {
+        if (!adminSession.isSignedInString().equals(form.getLoggedin())) {
+            adminSession.setSignedIn(form.getLoggedin());
+        }
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "IndyCar Stats App");
+            model.addAttribute("form", form);
+            return "add";
+        }
+
+        List<Session> sessions;
+
+        return "";
     }
 
     @RequestMapping(value="decimal/add", method= RequestMethod.GET)

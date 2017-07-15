@@ -8,13 +8,15 @@
         <div class="container body-content">
             <h2 th:text="${title}">IndyCar Stats</h2>
 
-            <div th:unless="${tracks} and ${tracks.size()}">
-                <h4>No Results</h4>
-            </div>
-
             <table class="table">
-                <tr th:each="track : ${tracks}">
+                <tr>
                     <td><a th:href="'/tracks/view/' + ${track.id}" th:text="${track.name}"></a></td>
+                </tr>
+            </table>
+            <table class="table">
+                <tr th:each="race : ${track.races}">
+                    <td><a th:href="'/races/view/' + ${race.id}" th:text="${race.name}"></a></td>
+                    <td><a th:href="'/seasons/view/' + ${race.season.year}" th:text="${race.season.year}"></a></td>
                 </tr>
             </table>
             <ul>

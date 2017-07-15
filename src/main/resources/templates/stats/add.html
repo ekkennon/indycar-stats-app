@@ -8,10 +8,22 @@
         <div class="container body-content">
             <h2 th:text="${title}">IndyCar Stats</h2>
 
-            <form method="post" class="add-form" th:object="${stat}">
+            <form method="post" class="add-form" th:object="${form}">
+
                 <div class="form-group">
-                    <input placeholder="Name" class="form-control" th:field="*{name}" required="required"/>
-                    <span th:errors="*{name}" class="error"></span>
+                    <label th:for="driverid">Drivers</label>
+                    <select th:field="*{driverid}">
+                        <option th:each="driver : *{drivers}" th:text="${driver.name}" th:value="${driver.id}"></option>
+                    </select>
+                    <span th:errors="*{driverid}" class="error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label th:for="raceid">Races</label>
+                    <select th:field="*{raceid}">
+                        <option th:each="race : *{races}" th:text="${race.name}" th:value="${race.id}"></option>
+                    </select>
+                    <span th:errors="*{raceid}" class="error"></span>
                 </div>
 
                 <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />

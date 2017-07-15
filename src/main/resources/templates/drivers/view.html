@@ -14,6 +14,11 @@
                         <td><a th:href="'/drivers/view/' + ${driver.id}" th:text="${driver.name}"></a></td>
                     </tr>
                 </table>
+                <table class="table">
+                    <tr th:each="team : ${driver.teams}">
+                        <td><a th:href="'/teams/view/' + ${team.id}" th:text="${team.name} + ' ' + ${team.season.year}"></a></td>
+                    </tr>
+                </table>
                 <ul>
                     <li><a th:href="'/drivers/edit/' + ${driver.id}">Edit Driver</a></li>
                     <li><a href="/drivers/add">Add Driver</a></li>

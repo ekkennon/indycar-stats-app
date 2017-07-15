@@ -10,7 +10,7 @@
 
             <table class="table">
                 <tr th:each="session : ${sessions}">
-                    <td><a th:href="'/sessions/view/' + ${session.id}" th:text="${session.name}"></a></td>
+                    <td><a th:href="'/sessions/view/' + ${session.id}" th:text="${session.name} + ' at ' + ${session.race.name} + ' in ' + ${session.race.season.year}"></a></td>
                 </tr>
             </table>
             <ul>
