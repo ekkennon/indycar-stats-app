@@ -17,8 +17,10 @@ public class DriverResult {
     private int startPos;
     private int endPos;
 
-    private int driverid;
-    private int sessionid;
+    //private int driverid;
+    //private int sessionid;
+    private String driverName;
+    private String raceName;
 
     /*
     private int lapsLed;
@@ -75,7 +77,7 @@ public class DriverResult {
     public void setEndPos(int endPos) {
         this.endPos = endPos;
     }
-
+/*
     public int getDriverid() {
         return driverid;
     }
@@ -91,6 +93,22 @@ public class DriverResult {
     public void setSessionid(int sessionid) {
         this.sessionid = sessionid;
     }
+*/
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getRaceName() {
+        return raceName;
+    }
+
+    public void setRaceName(String raceName) {
+        this.raceName = raceName;
+    }
 
     @Override
     public String toString() {
@@ -99,8 +117,10 @@ public class DriverResult {
                 ", carNum=" + carNum +
                 ", startPos=" + startPos +
                 ", endPos=" + endPos +
-                ", driverid=" + driverid +
-                ", sessionid=" + sessionid +
+                //", driverid=" + driverid +
+                //", sessionid=" + sessionid +
+                ", driverName='" + driverName + '\'' +
+                ", raceName='" + raceName + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }

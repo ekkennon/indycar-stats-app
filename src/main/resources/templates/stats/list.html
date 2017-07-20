@@ -10,20 +10,20 @@
 
             <table class="table">
                 <tr>
-                    <td>ID</td>
+                    <td>Driver</td>
                     <td>Car Number</td>
                     <td>Start Position</td>
                     <td>End Position</td>
                     <td>Status</td>
+                    <td>Session</td>
                 </tr>
                 <tr th:each="stat : ${stats}">
-                    <td th:text="${stat.id}"></td>
+                    <td th:text="${stat.driverName}"></td>
                     <td th:text="${stat.carNum}"></td>
                     <td th:text="${stat.startPos}"></td>
                     <td th:text="${stat.endPos}"></td>
                     <td th:text="${stat.status}"></td>
-                    <td th:text="${stat.driverid}"></td>
-                    <td th:text="${stat.sessionid}"></td>
+                    <td th:text="${stat.raceName}"></td>
                 </tr>
             </table>
 

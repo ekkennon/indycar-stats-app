@@ -24,6 +24,9 @@ public class StatController {
     private String statsTitle = "IndyCar Stats List";
 
     @Autowired
+    private DriverDao driverDao;
+
+    @Autowired
     private RaceDao raceDao;
 
     @Autowired
@@ -53,6 +56,7 @@ public class StatController {
 
         AddDataForm addDataForm = new AddDataForm();
         addDataForm.setDriverid(form.getDriverid());
+        addDataForm.setRaceid(form.getRaceid());
         addDataForm.setSessions(sessionDao.findByRace(raceDao.findOne(form.getRaceid())));
 
         model.addAttribute("title", "IndyCar Stats App - Add Stats");
@@ -75,6 +79,7 @@ public class StatController {
 
         AddDataForm addDataForm = new AddDataForm();
         addDataForm.setDriverid(form.getDriverid());
+        addDataForm.setRaceid(form.getRaceid());
         addDataForm.setSessionid(form.getSessionid());
 
         model.addAttribute("title", "IndyCar Stats App - Add Stats");
@@ -90,8 +95,8 @@ public class StatController {
         stat.setStartPos(form.getStat().getStartPos());
         stat.setEndPos(form.getStat().getEndPos());
         stat.setStatus(form.getStat().getStatus());
-        stat.setDriverid(form.getDriverid());
-        stat.setSessionid(form.getSessionid());
+        stat.setDriverName(driverDao.findOne(form.getDriverid()).getName());
+        stat.setRaceName(raceDao.findOne(form.getRaceid()).getName() + " " + sessionDao.findOne(form.getSessionid()).getName());
         statDao.save(stat);
 
         model.addAttribute("title", "IndyCar Stats App - Add Stats");
