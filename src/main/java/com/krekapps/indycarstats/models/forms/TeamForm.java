@@ -4,8 +4,6 @@ import com.krekapps.indycarstats.models.Driver;
 import com.krekapps.indycarstats.models.Season;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ekk on 27-Jun-17.

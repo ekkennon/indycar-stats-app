@@ -1,7 +1,6 @@
 package com.krekapps.indycarstats.models.data;
 
 import com.krekapps.indycarstats.models.Season;
-import com.krekapps.indycarstats.models.Team;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

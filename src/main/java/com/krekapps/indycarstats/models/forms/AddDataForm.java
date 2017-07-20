@@ -4,7 +4,6 @@ import com.krekapps.indycarstats.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by ekk on 11-Jul-17.

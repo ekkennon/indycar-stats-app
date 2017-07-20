@@ -4,7 +4,7 @@ import com.krekapps.indycarstats.models.DriverResult;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
- * Created by raefo on 16-Jul-17.
+ * Created by ekk on 16-Jul-17.
  */
 public interface StatDao extends MongoRepository<DriverResult, String> {
 

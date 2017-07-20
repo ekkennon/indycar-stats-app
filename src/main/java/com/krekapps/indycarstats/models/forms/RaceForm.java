@@ -1,6 +1,5 @@
 package com.krekapps.indycarstats.models.forms;
 
-import com.krekapps.indycarstats.models.Driver;
 import com.krekapps.indycarstats.models.Season;
 import com.krekapps.indycarstats.models.Track;
 

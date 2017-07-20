@@ -1,8 +1,5 @@
 package com.krekapps.indycarstats.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-//import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import org.springframework.data.annotation.Id;
@@ -11,15 +8,10 @@ import org.springframework.data.annotation.Id;
  * Created by ekk on 15-Jul-17.
  */
 
-//@Entity
 public class DriverResult {
 
-    //@GeneratedValue
     @Id
     private String id;
-
-    //private Session session;
-    //private Driver driver;
 
     private int carNum;
     private int startPos;

@@ -2,8 +2,6 @@ package com.krekapps.indycarstats.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ekk on 25-Jun-17.
