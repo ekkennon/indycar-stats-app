@@ -70,20 +70,20 @@ public class HomeController {
     }
 
     @RequestMapping(value="view")
-    public String mainView(Model model) {
-        model.addAttribute("title", "IndyCar Stats App");
+    public String view(Model model) {
+        model.addAttribute("title", "IndyCar Stats App - Add Stats");
         model.addAttribute("loggedin", adminSession.isSignedInString());
         return "view";
     }
 
     @RequestMapping(value="add", method=RequestMethod.POST)
-    public String mainAdd(Model model, @ModelAttribute @Valid AddDataForm form, Errors errors) {
+    public String add(Model model, @ModelAttribute @Valid AddDataForm form, Errors errors) {
         if (!adminSession.isSignedInString().equals(form.getLoggedin())) {
             adminSession.setSignedIn(form.getLoggedin());
         }
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "IndyCar Stats App");
+            model.addAttribute("title", "IndyCar Stats App - Add Stats");
             model.addAttribute("form", form);
             return "add";
         }
@@ -98,8 +98,8 @@ public class HomeController {
             }
         }
 
-        model.addAttribute("title", "IndyCar Stats App");
+        model.addAttribute("title", "IndyCar Stats App - Add Stats");
         model.addAttribute("form", addDataForm);
-        return "/stats/add";
+        return "/stats/addByDriver";
     }
 }

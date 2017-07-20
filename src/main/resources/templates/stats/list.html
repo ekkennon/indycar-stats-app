@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body>
+    <head th:replace="fragments :: head"></head>
+    <body>
 
-<div th:replace="fragments :: page-header"></div>
+        <div th:replace="fragments :: page-header"></div>
 
-<div class="container body-content">
-    <h2 th:text="${title}">IndyCar Stats</h2>
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
 
-    <div th:unless="${stats} and ${stats.size()}">
-        <h4>No Results</h4>
+            <table class="table">
+                <tr>
+                    <td>ID</td>
+                    <td>Car Number</td>
+                    <td>Start Position</td>
+                    <td>End Position</td>
+                    <td>Status</td>
+                </tr>
+                <tr th:each="stat : ${stats}">
+                    <td th:text="${stat.id}"></td>
+                    <td th:text="${stat.carNum}"></td>
+                    <td th:text="${stat.startPos}"></td>
+                    <td th:text="${stat.endPos}"></td>
+                    <td th:text="${stat.status}"></td>
+                    <td th:text="${stat.driverid}"></td>
+                    <td th:text="${stat.sessionid}"></td>
+                </tr>
+            </table>
+
+        <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
+
+        <input type="submit" value="Add Stat" />
+
+
+        <br/><br/><br/>
+
+        <ul>
+            <li><a href="/sessions/add">Add Session</a></li>
+        </ul>
+
     </div>
 
-    <table class="table">
-        <tr th:each="stat : ${stats}">
-            <td><a th:href="'/stats/view/' + ${stat.id}" th:text="${stat.name}"></a></td>
-        </tr>
-    </table>
-</div>
+    <div th:replace="fragments :: stat-footer"></div>
 
-<div th:replace="fragments :: stat-footer"></div>
-<form id="loginform" method="post">
-    <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
-</form>
-</body>
+    </body>
 </html>

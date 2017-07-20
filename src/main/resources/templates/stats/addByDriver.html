@@ -8,7 +8,7 @@
         <div class="container body-content">
             <h2 th:text="${title}">IndyCar Stats</h2>
 
-            <form method="post" class="add-form" th:object="${form}">
+            <form method="post" action="/stats/add" class="add-form" th:object="${form}">
 
                 <div class="form-group">
                     <label th:for="driverid">Drivers</label>
@@ -26,10 +26,21 @@
                     <span th:errors="*{raceid}" class="error"></span>
                 </div>
 
-                <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
+                <input type="hidden" th:field="*{loggedin}" />
 
-                <input type="submit" value="Add Stat" />
+                <input type="submit" value="Continue" />
             </form>
+
+            <br/><br/><br/>
+
+            <ul>
+                <li><a href="/tracks/add">Add Track</a></li>
+                <li><a href="/drivers/add">Add Driver</a></li>
+                <li><a href="/races/add">Add Race</a></li>
+                <li><a href="/teams/add">Add Team</a></li>
+                <li><a href="/sessions/add">Add Session</a></li>
+            </ul>
+
         </div>
 
         <div th:replace="fragments :: stat-footer"></div>

@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body>
+    <head th:replace="fragments :: head"></head>
+    <body>
 
-<div th:replace="fragments :: page-header"></div>
+        <div th:replace="fragments :: page-header"></div>
 
-<div class="container body-content">
-    <h2 th:text="${title}">IndyCar Stats</h2>
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
 
-    <div th:unless="${drivers} and ${drivers.size()}">
-        <h4>No Results</h4>
-    </div>
+            <div th:unless="${drivers} and ${drivers.size()}">
+                <h4>No Results</h4>
+            </div>
 
-    <table class="table">
-        <tr th:each="driver : ${drivers}">
-            <td><a th:href="'/drivers/view/' + ${driver.id}" th:text="${driver.name}"></a></td>
-        </tr>
-    </table>
-    <ul>
-        <li><a href="/drivers/add">Add Driver</a></li>
-        <li><a href="/teams/list">View Teams</a></li>
-        <li><a href="/teams/add">Add Team</a></li>
-    </ul>
-</div>
+            <table class="table">
+                <tr th:each="driver : ${drivers}">
+                    <td><a th:href="'/drivers/view/' + ${driver.id}" th:text="${driver.name}"></a></td>
+                </tr>
+            </table>
+            <ul>
+                <li><a href="/drivers/add">Add Driver</a></li>
+                <li><a href="/teams/list">View Teams</a></li>
+                <li><a href="/teams/add">Add Team</a></li>
+            </ul>
+        </div>
 
-<div th:replace="fragments :: driver-footer"></div>
+        <div th:replace="fragments :: driver-footer"></div>
 
-<form th:replace="fragments :: lform"></form>
-</body>
+        <form th:replace="fragments :: lform"></form>
+    </body>
 </html>

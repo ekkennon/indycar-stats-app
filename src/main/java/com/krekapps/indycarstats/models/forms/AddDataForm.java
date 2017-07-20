@@ -1,9 +1,6 @@
 package com.krekapps.indycarstats.models.forms;
 
-import com.krekapps.indycarstats.models.Driver;
-import com.krekapps.indycarstats.models.Race;
-import com.krekapps.indycarstats.models.Season;
-import com.krekapps.indycarstats.models.Team;
+import com.krekapps.indycarstats.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +14,13 @@ public class AddDataForm {
     private String loggedin;
     private Iterable<Season> seasons;
     private int year;
-    private int teamid;
+    private Iterable<Session> sessions;
+    private int sessionid;
     private Iterable<Race> races;
     private int raceid;
     private List<Driver> drivers = new ArrayList<>();
     private int driverid;
+    private DriverResult stat;
 
     public String getLoggedin() {
         return loggedin;
@@ -47,12 +46,20 @@ public class AddDataForm {
         this.year = year;
     }
 
-    public int getTeamid() {
-        return teamid;
+    public Iterable<Session> getSessions() {
+        return sessions;
     }
 
-    public void setTeamid(int teamid) {
-        this.teamid = teamid;
+    public void setSessions(Iterable<Session> sessions) {
+        this.sessions = sessions;
+    }
+
+    public int getSessionid() {
+        return sessionid;
+    }
+
+    public void setSessionid(int sessionid) {
+        this.sessionid = sessionid;
     }
 
     public Iterable<Race> getRaces() {
@@ -91,4 +98,11 @@ public class AddDataForm {
         this.driverid = driverid;
     }
 
+    public DriverResult getStat() {
+        return stat;
+    }
+
+    public void setStat(DriverResult stat) {
+        this.stat = stat;
+    }
 }
