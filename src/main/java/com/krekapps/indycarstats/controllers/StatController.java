@@ -20,6 +20,8 @@ import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
 @Controller
 @RequestMapping(value="stats")
 public class StatController {
+    private static AddDataForm addDataForm = new AddDataForm();
+
     private final String addStat = "Add IndyCar Stat:";
     private String statsTitle = "IndyCar Stats List";
 
@@ -30,10 +32,16 @@ public class StatController {
     private RaceDao raceDao;
 
     @Autowired
+    SeasonDao seasonDao;
+
+    @Autowired
     private SessionDao sessionDao;
 
     @Autowired
     private StatDao statDao;
+
+    @Autowired
+    TeamDao teamDao;
 
     @RequestMapping(value="")
     public String statIndex(Model model) {
@@ -42,22 +50,47 @@ public class StatController {
         return "stats/index";
     }
 
-    @RequestMapping(value="add", method=RequestMethod.POST)
-    private String add(Model model, @ModelAttribute @Valid AddDataForm form, Errors errors) {
-        if (!adminSession.isSignedInString().equals(form.getLoggedin())) {
-            adminSession.setSignedIn(form.getLoggedin());
+    @RequestMapping(value="addSeason", method=RequestMethod.GET)
+    public String chooseDriver(Model model, @RequestParam int year) {
+        if (!adminSession.isSignedInString().equals(adminSession.isSignedInString())) {
+            adminSession.setSignedIn(adminSession.isSignedInString());
         }
 
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "IndyCar Stats App - Add Stats");
-            model.addAttribute("form", form);
-            return "add";
+        addDataForm.setLoggedin(adminSession.isSignedInString());
+        addDataForm.setRaces(raceDao.findBySeason(seasonDao.findOne(year)));
+
+        for (Team t : teamDao.findBySeason(seasonDao.findOne(year))) {
+            for (Driver d : t.getDrivers()) {
+                addDataForm.addDriver(d);
+            }
         }
 
-        AddDataForm addDataForm = new AddDataForm();
-        addDataForm.setDriverid(form.getDriverid());
-        addDataForm.setRaceid(form.getRaceid());
-        addDataForm.setSessions(sessionDao.findByRace(raceDao.findOne(form.getRaceid())));
+        model.addAttribute("title", "IndyCar Stats App - Add Stats");
+        model.addAttribute("form", addDataForm);
+        return "/stats/addByDriver";
+    }
+
+    @RequestMapping(value="addDriver", method=RequestMethod.GET)
+    public String chooseRace(Model model, @RequestParam int driver) {
+        if (!adminSession.isSignedInString().equals(adminSession.isSignedInString())) {
+            adminSession.setSignedIn(adminSession.isSignedInString());
+        }
+
+        addDataForm.setDriverid(driver);
+
+        model.addAttribute("title", "IndyCar Stats App - Add Stats");
+        model.addAttribute("form", addDataForm);
+        return "/stats/addByRace";
+    }
+
+    @RequestMapping(value="addRace", method=RequestMethod.GET)
+    private String chooseSession(Model model, @RequestParam int race) {
+        if (!adminSession.isSignedInString().equals(adminSession.isSignedInString())) {
+            adminSession.setSignedIn(adminSession.isSignedInString());
+        }
+
+        addDataForm.setRaceid(race);
+        addDataForm.setSessions(sessionDao.findByRace(raceDao.findOne(race)));
 
         model.addAttribute("title", "IndyCar Stats App - Add Stats");
         model.addAttribute("form", addDataForm);
@@ -65,22 +98,13 @@ public class StatController {
         return "stats/addBySession";
     }
 
-    @RequestMapping(value="adddata", method=RequestMethod.POST)
-    private String addData(Model model, @ModelAttribute @Valid AddDataForm form, Errors errors) {
-        if (!adminSession.isSignedInString().equals(form.getLoggedin())) {
-            adminSession.setSignedIn(form.getLoggedin());
+    @RequestMapping(value="addSession", method=RequestMethod.GET)
+    private String addData(Model model, @RequestParam int id) {
+        if (!adminSession.isSignedInString().equals(adminSession.isSignedInString())) {
+            adminSession.setSignedIn(adminSession.isSignedInString());
         }
 
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "IndyCar Stats App - Add Stats");
-            model.addAttribute("form", form);
-            return "add";
-        }
-
-        AddDataForm addDataForm = new AddDataForm();
-        addDataForm.setDriverid(form.getDriverid());
-        addDataForm.setRaceid(form.getRaceid());
-        addDataForm.setSessionid(form.getSessionid());
+        addDataForm.setSessionid(id);
 
         model.addAttribute("title", "IndyCar Stats App - Add Stats");
         model.addAttribute("form", addDataForm);
@@ -90,13 +114,19 @@ public class StatController {
 
     @RequestMapping(value="submitdata", method=RequestMethod.POST)
     private String submitData(Model model, @ModelAttribute @Valid AddDataForm form, Errors errors) {
+        if (errors.hasErrors()) {
+            //model.addAttribute("title", addTitle);
+            //model.addAttribute("form", raceForm);
+            return "redirect:";
+        }
+
         DriverResult stat = new DriverResult();
         stat.setCarNum(form.getStat().getCarNum());
         stat.setStartPos(form.getStat().getStartPos());
         stat.setEndPos(form.getStat().getEndPos());
         stat.setStatus(form.getStat().getStatus());
-        stat.setDriverName(driverDao.findOne(form.getDriverid()).getName());
-        stat.setRaceName(raceDao.findOne(form.getRaceid()).getName() + " " + sessionDao.findOne(form.getSessionid()).getName());
+        stat.setDriverName(driverDao.findOne(addDataForm.getDriverid()).getName());
+        stat.setRaceName(raceDao.findOne(addDataForm.getRaceid()).getName() + " " + sessionDao.findOne(addDataForm.getSessionid()).getName());
         statDao.save(stat);
 
         model.addAttribute("title", "IndyCar Stats App - Add Stats");

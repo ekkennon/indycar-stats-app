@@ -7,21 +7,21 @@
 
         <div class="container body-content">
 
-            <form method="post" action="/stats/addSession" class="add-form" th:object="${form}" id="addform">
+            <form method="post" action="/stats/addRace" class="add-form" th:object="${form}" id="addform">
 
                 <div class="form-group">
-                    <label th:for="sessionid">Sessions</label>
-                    <select th:field="*{sessionid}">
-                        <option th:each="session : *{sessions}" th:text="${session.name}" th:value="${session.id}"></option>
+                    <label th:for="raceid">Races</label>
+                    <select th:field="*{raceid}">
+                        <option th:each="race : *{races}" th:text="${race.name}" th:value="${race.id}"></option>
                     </select>
-                    <span th:errors="*{sessionid}" class="error"></span>
+                    <span th:errors="*{raceid}" class="error"></span>
                 </div>
 
                 <input type="hidden" th:field="*{loggedin}" />
 
             </form>
 
-            <input type="submit" onclick="addSession()" value="Enter Stats"/>
+            <input type="submit" onclick="addRace()" value="Continue"/>
 
         </div>
 

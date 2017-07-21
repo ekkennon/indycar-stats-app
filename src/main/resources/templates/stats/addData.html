@@ -8,29 +8,18 @@
         <div class="container body-content">
             <h2 th:text="${title}">IndyCar Stats</h2>
 
-            <form method="post" action="submitdata" class="add-form" th:object="${form}">
+            <form method="post" action="/stats/submitdata" class="add-form" th:object="${form}">
 
                 <input type="number" min="1" max="100" required="required" th:field="*{stat.carNum}" placeholder="Car Number" />
                 <input type="number" min="1" max="33" required="required" th:field="*{stat.startPos}" placeholder="Starting Position" />
                 <input type="number" min="1" max="33" required="required" th:field="*{stat.endPos}" placeholder="Ending Position" />
                 <input type="text" required="required" placeholder="Status" th:field="*{stat.status}" />
 
-                <input type="hidden" th:field="*{sessionid}" />
-
-                <input type="hidden" th:field="*{driverid}" />
-
-                <input type="hidden" th:field="*{raceid}" />
-
                 <input type="hidden" th:field="*{loggedin}" />
 
-                <input type="submit" value="Add Stat" />
+                <input type="submit" value="Add Stat"/>
+
             </form>
-
-            <br/><br/><br/>
-
-            <ul>
-                <li><a href="/sessions/add">Add Session</a></li>
-            </ul>
 
         </div>
 

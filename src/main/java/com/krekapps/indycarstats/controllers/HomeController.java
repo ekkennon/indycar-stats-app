@@ -27,13 +27,7 @@ import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
 public class HomeController {
 
     @Autowired
-    RaceDao raceDao;
-
-    @Autowired
     SeasonDao seasonDao;
-
-    @Autowired
-    TeamDao teamDao;
 
     @RequestMapping(value="")
     public String index(Model model) {
@@ -61,7 +55,7 @@ public class HomeController {
 
         model.addAttribute("title", "IndyCar Stats App");
         model.addAttribute("form", addDataForm);
-        return "add";
+        return "/stats/addBySeason";
     }
 
     @RequestMapping(value="view")
@@ -69,32 +63,5 @@ public class HomeController {
         model.addAttribute("title", "IndyCar Stats App - Add Stats");
         model.addAttribute("loggedin", adminSession.isSignedInString());
         return "view";
-    }
-
-    @RequestMapping(value="add", method=RequestMethod.POST)
-    public String add(Model model, @ModelAttribute @Valid AddDataForm form, Errors errors) {
-        if (!adminSession.isSignedInString().equals(form.getLoggedin())) {
-            adminSession.setSignedIn(form.getLoggedin());
-        }
-
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "IndyCar Stats App - Add Stats");
-            model.addAttribute("form", form);
-            return "add";
-        }
-
-        AddDataForm addDataForm = new AddDataForm();
-        addDataForm.setLoggedin(form.getLoggedin());
-        addDataForm.setRaces(raceDao.findBySeason(seasonDao.findOne(form.getYear())));
-
-        for (Team t : teamDao.findBySeason(seasonDao.findOne(form.getYear()))) {
-            for (Driver d : t.getDrivers()) {
-                addDataForm.addDriver(d);
-            }
-        }
-
-        model.addAttribute("title", "IndyCar Stats App - Add Stats");
-        model.addAttribute("form", addDataForm);
-        return "/stats/addByDriver";
     }
 }
