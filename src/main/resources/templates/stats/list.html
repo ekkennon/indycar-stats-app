@@ -10,12 +10,12 @@
 
             <table class="table">
                 <tr>
-                    <td>Driver</td>
-                    <td>Car Number</td>
-                    <td>Start Position</td>
-                    <td>End Position</td>
-                    <td>Status</td>
-                    <td>Session</td>
+                    <th>Driver</th>
+                    <th>Car Number</th>
+                    <th>Start Position</th>
+                    <th>End Position</th>
+                    <th>Status</th>
+                    <th>Session</th>
                 </tr>
                 <tr th:each="stat : ${stats}">
                     <td th:text="${stat.driverName}"></td>

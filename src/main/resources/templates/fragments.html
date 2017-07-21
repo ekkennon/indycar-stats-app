@@ -20,52 +20,12 @@
         <!-- AJAX -->
         <script src="/js/ajax.js" type="text/javascript"></script>
         <script src="/js/adddata.js" type="text/javascript"></script>
-        <script language="javascript" type="text/javascript">
-        function addSeason()
-        {
-            var dropdown = document.getElementById("year");
-            var year = dropdown.options[dropdown.selectedIndex].value;
-            if (ajax) {
-                ajax.open('get','stats/addSeason?year=' + year);
-                ajax.send(null);
-            } else {
-                document.selection.submit();
-            }
-        }
-        function addDriver()
-        {
-            var dropdown = document.getElementById("driverid");
-            var id = dropdown.options[dropdown.selectedIndex].value;
-            if (ajax) {
-                ajax.open('get','stats/addDriver?driver=' + id);
-                ajax.send(null);
-            } else {
-                document.selection.submit();
-            }
-        }
-        function addRace()
-        {
-            var dropdown = document.getElementById("raceid");
-            var id = dropdown.options[dropdown.selectedIndex].value;
-            if (ajax) {
-                ajax.open('get','stats/addRace?race=' + id);
-                ajax.send(null);
-            } else {
-                document.selection.submit();
-            }
-        }
-        function addSession()
-        {
-            var dropdown = document.getElementById("sessionid");
-            var id = dropdown.options[dropdown.selectedIndex].value;
-            if (ajax) {
-                ajax.open('get','stats/addSession?id=' + id);
-                ajax.send(null);
-            } else {
-                document.selection.submit();
-            }
-        }
-    </script>
+        <script src="/js/addloading.js" type="text/javascript"></script>
+
+        <!-- Google Charts API from: -->
+        <!-- https://developers.google.com/chart/interactive/docs/quick_start -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="/js/charts.js" type="text/javascript"></script>
     </head>
 
     <body>

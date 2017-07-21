@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head th:replace="fragments :: head"></head>
+    <body>
+
+        <div th:replace="fragments :: page-header"></div>
+
+        <div class="container body-content">
+            <h2 th:text="${title}">IndyCar Stats</h2>
+
+            <div id="chart_div"></div>
+
+        </div>
+
+        <div th:replace="fragments :: stat-footer"></div>
+
+    </body>
+</html>
