@@ -22,7 +22,11 @@
         ]);
 
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night', 'width':400, 'height':300};
+        var textbox = document.getElementById("chartName");
+        var textboxname = document.getElementById("name");
+        var chartName = textbox.getValue;
+        var name = textboxname.getValue;
+        var options = {'title':chartName + name, 'width':400, 'height':300};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));

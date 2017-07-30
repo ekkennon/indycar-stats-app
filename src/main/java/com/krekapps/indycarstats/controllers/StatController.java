@@ -134,4 +134,13 @@ public class StatController {
 
         return "/stats/list";
     }
+
+    @RequestMapping(value="viewchart")
+    private String viewChart(Model model) {
+
+        model.addAttribute("title", "IndyCar Stats App - View Stats");
+        model.addAttribute("chartName", "View Stats Chart");
+
+        return "/stats/viewChart";
+    }
 }
