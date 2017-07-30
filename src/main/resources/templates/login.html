@@ -11,29 +11,6 @@
             <a href="#" onclick="signOut();">Sign out</a>
         </div>
 
-        <script>
-            function onSignIn() {
-                gapi.load('auth2', function() {
-                    auth2 = gapi.auth2.getAuthInstance();
-                    auth2.signIn();
-                    $('#loggedin').val('true');
-                    var form = $('#loginform');
-                    form.submit();
-                });
-            };
-        </script>
-
-        <script>
-          function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut();
-
-            $('#loggedin').val('false');
-            var form = $('#loginform');
-                form.submit();
-          };
-        </script>
-
         <form id="loginform" method="post">
             <input type="hidden" name="loggedin" id="loggedin" th:value="*{loggedin}" />
         </form>
