@@ -68,12 +68,12 @@ public class DriverController {
     }
 
     @RequestMapping(value="add", method=RequestMethod.POST)
-    private String add(Model model, @RequestParam String name, @RequestParam String loggedin, @RequestParam String twitter) {
+    private String add(Model model, @RequestParam String name, @RequestParam String loggedin, @RequestParam String twitterHandle) {
         if (!adminSession.isSignedInString().equals(loggedin)) {
             adminSession.setSignedIn(loggedin);
         }
         Driver driver = new Driver(name);
-        driver.setTwitterHandle(twitter);
+        driver.setTwitterHandle(twitterHandle);
         driverDao.save(driver);
         model.addAttribute("title", listTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
