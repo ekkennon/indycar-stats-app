@@ -125,8 +125,8 @@ public class StatController {
         stat.setStartPos(form.getStat().getStartPos());
         stat.setEndPos(form.getStat().getEndPos());
         stat.setStatus(form.getStat().getStatus());
-        stat.setDriverName(driverDao.findOne(addDataForm.getDriverid()).getName());
-        stat.setRaceName(raceDao.findOne(addDataForm.getRaceid()).getName() + " " + sessionDao.findOne(addDataForm.getSessionid()).getName());
+        stat.setDriverID(addDataForm.getDriverid());
+        stat.setSessionID(addDataForm.getSessionid());
         statDao.save(stat);
 
         model.addAttribute("title", "IndyCar Stats App - Add Stats");

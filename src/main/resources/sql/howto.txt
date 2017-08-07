@@ -2,3 +2,9 @@ to insert data from these sql files to the db:
  *create data.sql file directly off resources folder
  *copy insert statements to data.sql
  *after app has run and data put in db, delete data.sql file
+
+to insert data to the mongodb:
+ *https://docs.mongodb.com/manual/tutorial/write-scripts-for-the-mongo-shell/#execute-a-javascript-file
+ *create a scripts folder in the data folder
+ *put the mongo_insert.js in scripts/
+ *use command load("/data/db/scripts/myjstest.js") in mongo shell

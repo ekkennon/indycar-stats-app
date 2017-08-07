@@ -19,8 +19,11 @@ public class DriverResult {
 
     //private int driverid;
     //private int sessionid;
-    private String driverName;
-    private String raceName;
+    //private String driverName;
+    //private String raceName;
+
+    private int driverID;
+    private int sessionID;
 
     /*
     private int lapsLed;
@@ -93,7 +96,7 @@ public class DriverResult {
     public void setSessionid(int sessionid) {
         this.sessionid = sessionid;
     }
-*/
+
     public String getDriverName() {
         return driverName;
     }
@@ -109,6 +112,23 @@ public class DriverResult {
     public void setRaceName(String raceName) {
         this.raceName = raceName;
     }
+*/
+
+    public int getDriverID() {
+        return driverID;
+    }
+
+    public void setDriverID(int driverID) {
+        this.driverID = driverID;
+    }
+
+    public int getSessionID() {
+        return sessionID;
+    }
+
+    public void setSessionID(int sessionID) {
+        this.sessionID = sessionID;
+    }
 
     @Override
     public String toString() {
@@ -117,11 +137,24 @@ public class DriverResult {
                 ", carNum=" + carNum +
                 ", startPos=" + startPos +
                 ", endPos=" + endPos +
-                //", driverid=" + driverid +
-                //", sessionid=" + sessionid +
-                ", driverName='" + driverName + '\'' +
-                ", raceName='" + raceName + '\'' +
+                ", driverID=" + driverID +
+                ", sessionID=" + sessionID +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DriverResult that = (DriverResult) o;
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }
