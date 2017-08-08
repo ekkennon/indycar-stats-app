@@ -7,4 +7,4 @@ to insert data to the mongodb:
  *https://docs.mongodb.com/manual/tutorial/write-scripts-for-the-mongo-shell/#execute-a-javascript-file
  *create a scripts folder in the data folder
  *put the mongo_insert.js in scripts/
- *use command load("/data/db/scripts/myjstest.js") in mongo shell
+ *use command load("/data/db/scripts/mongo_insert.js") in mongo shell

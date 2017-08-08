@@ -17,26 +17,15 @@ public class DriverResult {
     private int startPos;
     private int endPos;
 
-    //private int driverid;
-    //private int sessionid;
-    //private String driverName;
-    //private String raceName;
+    private int driverid;
+    private int sessionid;
 
-    private int driverID;
-    private int sessionID;
-
-    /*
     private int lapsLed;
-    private int lapsFinished;
+    private int lapsCompleted;
     private int points;
-    private int totalPitStops;
-*/
-    private String status;
-/*
-    private double averageSpeed;
 
-    private Calendar totalTime;
-    */
+    private String status;
+
 
     public DriverResult() {
     }
@@ -80,7 +69,7 @@ public class DriverResult {
     public void setEndPos(int endPos) {
         this.endPos = endPos;
     }
-/*
+
     public int getDriverid() {
         return driverid;
     }
@@ -97,37 +86,28 @@ public class DriverResult {
         this.sessionid = sessionid;
     }
 
-    public String getDriverName() {
-        return driverName;
+    public int getLapsLed() {
+        return lapsLed;
     }
 
-    public void setDriverName(String driverName) {
-        this.driverName = driverName;
+    public void setLapsLed(int lapsLed) {
+        this.lapsLed = lapsLed;
     }
 
-    public String getRaceName() {
-        return raceName;
+    public int getLapsCompleted() {
+        return lapsCompleted;
     }
 
-    public void setRaceName(String raceName) {
-        this.raceName = raceName;
-    }
-*/
-
-    public int getDriverID() {
-        return driverID;
+    public void setLapsCompleted(int lapsCompleted) {
+        this.lapsCompleted = lapsCompleted;
     }
 
-    public void setDriverID(int driverID) {
-        this.driverID = driverID;
+    public int getPoints() {
+        return points;
     }
 
-    public int getSessionID() {
-        return sessionID;
-    }
-
-    public void setSessionID(int sessionID) {
-        this.sessionID = sessionID;
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     @Override
@@ -137,8 +117,11 @@ public class DriverResult {
                 ", carNum=" + carNum +
                 ", startPos=" + startPos +
                 ", endPos=" + endPos +
-                ", driverID=" + driverID +
-                ", sessionID=" + sessionID +
+                ", driverid=" + driverid +
+                ", sessionid=" + sessionid +
+                ", lapsLed=" + lapsLed +
+                ", lapsCompleted=" + lapsCompleted +
+                ", points=" + points +
                 ", status='" + status + '\'' +
                 '}';
     }
