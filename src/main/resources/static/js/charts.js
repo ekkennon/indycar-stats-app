@@ -10,8 +10,21 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
     // Create the data table.
     var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
+    var json = $("#json").val();
+    var obj = $.parseJSON(json);
+    var columns = obj.columns;
+    var rows = obj.rows;
+
+    alert("columns: " + columns);
+    alert("rows: " + rows);
+
+    for (var column in columns) {
+        alert("column: " + column);
+        data.addColumn(column.type, column.name);
+    }
+
+    //data.addColumn('string', 'Topping');
+    //data.addColumn('number', 'Slices');
     data.addRows([
       ['Mushrooms', 3],
       ['Onions', 1],

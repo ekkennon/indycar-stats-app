@@ -8,4 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface StatDao extends MongoRepository<DriverResult, String> {
 
+    Iterable<DriverResult> findByDriverid(int driverid);
+
+    Iterable<DriverResult> findBySessionid(int sessionid);
 }

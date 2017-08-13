@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.krekapps.indycarstats.IndycarStatsApplication.adminSession;
 
 /**
@@ -141,6 +144,58 @@ public class StatController {
         model.addAttribute("title", "IndyCar Stats App - View Stats");
         model.addAttribute("chartName", "View Stats Chart");
 
+        return "/stats/viewChart";
+    }
+
+    @RequestMapping(value="viewSeason", method=RequestMethod.GET)
+    public String chooseSeason(Model model) {
+        if (!adminSession.isSignedInString().equals(adminSession.isSignedInString())) {
+            adminSession.setSignedIn(adminSession.isSignedInString());
+        }
+
+        model.addAttribute("title", "IndyCar Stats App - Add Stats");
+        model.addAttribute("seasons", seasonDao.findAll());
+        model.addAttribute("loggedin", adminSession.isSignedInString());
+        return "/stats/viewBySeason";
+    }
+
+    @RequestMapping(value="viewBySeason", method=RequestMethod.POST)
+    public String viewBySeason(Model model, @RequestParam int year) {
+        if (!adminSession.isSignedInString().equals(adminSession.isSignedInString())) {
+            adminSession.setSignedIn(adminSession.isSignedInString());
+        }
+
+        List<Driver> drivers = new ArrayList<>();
+        for (Team t : teamDao.findBySeason(seasonDao.findOne(year))) {
+            drivers.addAll(t.getDrivers());
+        }
+
+        StringBuilder json = new StringBuilder();
+        json.append("{\"columns\":[{\"name\":\"drivers\",\"type\":\"string\"},{\"name\":\"points\",\"type\":\"number\"}],\"rows\":[");
+        for (Driver d : drivers) {
+            json.append("{\"name\":\"");
+            json.append(d.getName());
+            json.append("\",\"points\":");
+
+            int points = 0;
+            Iterable<DriverResult> stats = statDao.findByDriverid(d.getId());
+            for (DriverResult stat : stats) {
+
+                if (raceDao.findOne(sessionDao.findOne(stat.getSessionid()).getRace().getId()).getSeason().getYear() == year) {
+                    points += stat.getPoints();
+                }
+            }
+
+            json.append(points);
+            json.append("},");
+        }
+
+        json.deleteCharAt(json.length()-1);//delete final ,
+        json.append("]}");
+
+        model.addAttribute("title", "IndyCar Stats App - Add Stats");
+        model.addAttribute("chartName", "View Stats Chart");
+        model.addAttribute("json", json);
         return "/stats/viewChart";
     }
 }

@@ -33,3 +33,12 @@ function addSession() {
         document.selection.submit();
     }
 }
+
+function viewSeason() {
+    if (ajax) {
+        ajax.open('get', 'stats/viewBySeason?id=' + $("#year").val());
+        ajax.send(null);
+    } else {
+        document.selection.submit();
+    }
+}

@@ -33,7 +33,7 @@ function handleResponse() {
             // Put the received response in the DOM:
             $('#element').html(ajax.responseText);
         } else { // Bad status code, submit the form normally
-            $('#addform').submit();
+            $('#ajaxform').submit();
         }
     } // End of readyState IF.
 }

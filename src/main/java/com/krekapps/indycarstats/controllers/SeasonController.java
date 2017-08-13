@@ -44,7 +44,8 @@ public class SeasonController {
             seasonList.add(s);
         }
 
-        Collections.reverse(seasonList);
+        Collections.reverse(seasonList);//TODO look into lambda for this
+
         model.addAttribute("title", listTitle);
         model.addAttribute("loggedin", adminSession.isSignedInString());
         model.addAttribute("seasons", seasonList);

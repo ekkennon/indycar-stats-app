@@ -20,8 +20,8 @@
 
         <!-- AJAX -->
         <script src="/js/ajax.js" type="text/javascript"></script>
-        <script src="/js/adddata.js" type="text/javascript"></script>
-        <script src="/js/addloading.js" type="text/javascript"></script>
+        <script src="/js/response.js" type="text/javascript"></script>
+        <script src="/js/dataloading.js" type="text/javascript"></script>
 
         <!-- Google Charts API from: -->
         <!-- https://developers.google.com/chart/interactive/docs/quick_start -->
@@ -34,8 +34,9 @@
             <div class="container">
                 <div class="navbar-header">
                     <a th:href="@{/}" class="navbar-brand">Home</a>
-                    <a th:href="@{/seasons/list}" class="navbar-brand">View Stats By Season</a>
+                    <a th:href="@{/stats/viewSeason}" class="navbar-brand">View Stats By Season</a>
                     <a th:href="@{/drivers/list}" class="navbar-brand">View Stats By Driver</a>
+                    <a th:href="@{/drivers/list}" class="navbar-brand">View Stats By Track</a>
                     <a th:href="@{/login}" class="navbar-brand">Admin</a>
                 </div>
             </div>

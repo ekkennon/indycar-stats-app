@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head th:replace="fragments :: head"></head>
+    <body>
+
+    <div th:replace="fragments :: page-header"></div>
+
+    <div class="container body-content">
+        <h2 th:text="${title}">IndyCar Stats</h2>
+
+        <form method="post" action="/stats/viewBySeason" class="add-form" id="ajaxform">
+
+            <div class="form-group">
+                <label th:for="year">Seasons</label>
+                <select name="year" id="year">
+                    <option th:each="season : ${seasons}" th:text="${season.year}" th:value="${season.year}"></option>
+                </select>
+            </div>
+
+        </form>
+
+        <input type="submit" onclick="viewSeason()" value="Continue"/>
+
+        <div id="element"></div>
+
+        <br/><br/><br/>
+
+        <ul>
+            <li><a href="/tracks/add">Add Track</a></li>
+            <li><a href="/drivers/add">Add Driver</a></li>
+            <li><a href="/seasons/add">Add Season</a></li>
+            <li><a href="/races/add">Add Race</a></li>
+            <li><a href="/teams/add">Add Team</a></li>
+            <li><a href="/sessions/add">Add Session</a></li>
+        </ul>
+    </div>
+
+    <div th:replace="fragments :: stat-footer"></div>
+
+    <form th:replace="fragments :: lform"></form>
+
+    </body>
+</html>
