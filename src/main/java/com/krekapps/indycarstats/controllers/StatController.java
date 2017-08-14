@@ -157,6 +157,7 @@ public class StatController {
         model.addAttribute("seasons", seasonDao.findAll());
         model.addAttribute("loggedin", adminSession.isSignedInString());
         return "/stats/viewBySeason";
+        //TODO ajax is not working for this
     }
 
     @RequestMapping(value="viewBySeason", method=RequestMethod.POST)
@@ -171,9 +172,9 @@ public class StatController {
         }
 
         StringBuilder json = new StringBuilder();
-        json.append("{\"columns\":[{\"name\":\"drivers\",\"type\":\"string\"},{\"name\":\"points\",\"type\":\"number\"}],\"rows\":[");
+        json.append("{\"columns\":[{\"name\":\"drivername\",\"type\":\"string\"},{\"name\":\"points\",\"type\":\"number\"}],\"rows\":[");
         for (Driver d : drivers) {
-            json.append("{\"name\":\"");
+            json.append("{\"drivername\":\"");
             json.append(d.getName());
             json.append("\",\"points\":");
 

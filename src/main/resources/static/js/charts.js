@@ -10,31 +10,39 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
     // Create the data table.
     var data = new google.visualization.DataTable();
-    var json = $("#json").val();
-    var obj = $.parseJSON(json);
-    var columns = obj.columns;
-    var rows = obj.rows;
 
-    alert("columns: " + columns);
-    alert("rows: " + rows);
+    var json = $.parseJSON($("#json").val());
+    var columns = json.columns;
+    var rows = json.rows;
+    var colnames = [];
 
-    for (var column in columns) {
-        alert("column: " + column);
-        data.addColumn(column.type, column.name);
-    }
+    Object.keys(columns).forEach(function(i) {
+        data.addColumn(columns[i].type, columns[i].name);
+                colnames.push(columns[i].name);
+    });
 
-    //data.addColumn('string', 'Topping');
-    //data.addColumn('number', 'Slices');
-    data.addRows([
-      ['Mushrooms', 3],
-      ['Onions', 1],
-      ['Olives', 1],
-      ['Zucchini', 1],
-      ['Pepperoni', 2]
-    ]);
+    var rowArray = [];
+
+    Object.keys(rows).forEach(function(i) {
+        var drivername;
+        var points;
+        var row = [];
+
+        if (colnames[0] == 'drivername') {
+            row.push(rows[i].drivername)
+        }
+
+        if (colnames[1] == 'points') {
+            row.push(rows[i].points);
+        }
+
+        rowArray.push(row);
+    });
+
+    data.addRows(rowArray);
 
     // Set chart options
-    var options = {'title':$("#chartName").val(), 'width':400, 'height':300};
+    var options = {'title':$("#chartName").val(), 'width':600, 'height':300};
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
